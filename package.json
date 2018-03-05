@@ -1,0 +1,30 @@
+{
+	"name": "project-oba",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"directories": {
+		"example": "example"
+	},
+	"scripts": {
+		"dev": "concurrently --kill-others \"npm run browser-sync\" \"npm run node-sass\"",
+		"browser-sync": "browser-sync start --server --files \"*.html, style/*.css, scripts/*.js\"",
+		"node-sass": "node-sass -w style/index.scss -o style/",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kyunwang/oba-project.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/kyunwang/oba-project/issues"
+	},
+	"homepage": "https://github.com/kyunwang/oba-project#readme",
+	"devDependencies": {
+		"concurrently": "^3.5.1",
+		"node-sass": "^4.7.2"
+	}
+}

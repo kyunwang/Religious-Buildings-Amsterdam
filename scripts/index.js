@@ -7,10 +7,7 @@ import storage from './storage.js'
 	const app = {
 		data: [],
 		init() {
-			console.log('123');
-			this.data = storage.filterData(api.init());
-			console.log(this);
-			
+			api.init();
 		}
 	}
 
