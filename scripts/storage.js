@@ -6,24 +6,32 @@ const storage = {
 	// filterDataWW(data) {
 		console.log(data.results);
 		// First WW dat in A'dam
-		this.firstWW = data.results.bindings.filter(item => (item.date.value > 1914) && (item.date.value < 1919) );
-		console.log(this.firstWW);
+		// this.firstWW = data.results.bindings.filter(item => (item.date.value > 1914) && (item.date.value < 1919) );
+		// console.log(this.firstWW);
 
 
-		var imgdiv = document.getElementById('images');
 
-		var rows = this.firstWW;
-
-		for (let i = 0; i < rows.length; ++i) {
-			console.log(i);
-			
-			var img = document.createElement('img');
-			img.src = rows[i]['img']['value'];
-			// img.title = rows[i]['title']['value'];
-			imgdiv.appendChild(img);
-
-		}
+		
 	},
+	cleanData(data) {
+		data.results.bindings = data.results.bindings.map(item => {
+			if (!item.coordinate_location) return item;
+			// console.log(item);
+			
+			// Clean and create usable coordinates
+			let coords = item.coordinate_location.value
+				.split(' ')
+
+				coords = coords.map((item, i) => {
+					return item.replace(/[^0-9\.]+/g, "");
+				})
+
+				item.coordinate_location.value = coords;
+
+				return item;
+		});
+		return data;
+	}
 	// filterData(data) {
 
 	// }

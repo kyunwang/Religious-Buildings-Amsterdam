@@ -6,6 +6,7 @@ Prototyping and testing the new experimental API using RDF from OBA.
 
 
 *SparQL*: Read *Sparkle*
+RDF: Resource Description Framework
 Bibliotheek: Library
 
 
