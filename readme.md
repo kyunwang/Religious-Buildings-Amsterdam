@@ -28,3 +28,7 @@ Half a day left to make it before presentation
 
 
 Will write the the docs after this week
+
+
+
+Transpile the js

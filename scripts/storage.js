@@ -21,6 +21,9 @@ const storage = {
 				item.coordinate_location.value = coords;
 
 				return item;
+
+
+			
 		});
 		return data;
 	}

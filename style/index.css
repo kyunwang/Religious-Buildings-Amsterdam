@@ -5,14 +5,32 @@
   margin: 0;
   padding: 0; }
 
-img {
-  height: 20rem; }
-
-#map {
-  height: 100%; }
-
 html,
 body {
+  position: relative;
   height: 100%;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  overflow: hidden; }
+
+img {
+  max-height: 20rem; }
+
+header {
+  height: 15%; }
+
+#map {
+  height: 85%; }
+
+#image-con {
+  position: absolute;
+  bottom: 0;
+  height: 15rem;
+  width: 100%;
+  background-color: transparent;
+  background-color: red;
+  transform: translateY(100%);
+  transition: .3s all;
+  z-index: 1000; }
+  #image-con.show {
+    transform: translateY(0); }
