@@ -4,7 +4,8 @@
   --monastery-color: violet;
   --temple-color: yellow;
   --mosque-color: lightblue;
-  --shrine-color: salmon; }
+  --shrine-color: salmon;
+  --def-transition: all .1s ease-in; }
 
 *,
 *:before,
@@ -52,23 +53,24 @@ header {
 /*==========================
 === Filter styles
 ===========================*/
-.label-church {
-  border-bottom: 3px solid var(--church-color); }
+.filter-btn {
+  position: absolute;
+  left: -9999999px; }
+  .filter-btn:hover + .label-church, .filter-btn:checked + .label-church {
+    border-bottom: 3px solid var(--church-color); }
+  .filter-btn:hover + .label-synagogue, .filter-btn:checked + .label-synagogue {
+    border-bottom: 3px solid var(--synagogue-color); }
+  .filter-btn:hover + .label-monastery, .filter-btn:checked + .label-monastery {
+    border-bottom: 3px solid var(--monastery-color); }
+  .filter-btn:hover + .label-temple, .filter-btn:checked + .label-temple {
+    border-bottom: 3px solid var(--temple-color); }
+  .filter-btn:hover + .label-mosque, .filter-btn:checked + .label-mosque {
+    border-bottom: 3px solid var(--mosque-color); }
+  .filter-btn:hover + .label-shrine, .filter-btn:checked + .label-shrine {
+    border-bottom: 3px solid var(--shrine-color); }
 
-.label-synagogue {
-  border-bottom: 3px solid var(--synagogue-color); }
-
-.label-monastery {
-  border-bottom: 3px solid var(--monastery-color); }
-
-.label-temple {
-  border-bottom: 3px solid var(--temple-color); }
-
-.label-mosque {
-  border-bottom: 3px solid var(--mosque-color); }
-
-.label-shrine {
-  border-bottom: 3px solid var(--shrine-color); }
+label {
+  transition: var(--def-transition); }
 
 /*==========================
 === Marker styles
