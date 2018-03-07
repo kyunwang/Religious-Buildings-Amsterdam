@@ -1,3 +1,11 @@
+:root {
+  --church-color: lightseagreen;
+  --synagogue-color: gray;
+  --monastery-color: lightcoral;
+  --temple-color: yellow;
+  --mosque-color: lightblue;
+  --shrine-color: salmon; }
+
 *,
 *:before,
 *:after {
@@ -13,12 +21,18 @@ body {
   padding: 0;
   overflow: hidden; }
 
+/*==========================
+=== General styling
+===========================*/
 img {
   max-height: 20rem; }
 
 header {
   height: 15%; }
 
+/*==========================
+=== Map styling
+===========================*/
 #map {
   height: 85%; }
 
@@ -34,6 +48,46 @@ header {
   z-index: 1000; }
   #image-con.show {
     transform: translateY(0); }
+
+/*==========================
+=== Filter styles
+===========================*/
+/*==========================
+=== Marker styles
+===========================*/
+.marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 1.5rem;
+  overflow: hidden; }
+  .marker div {
+    height: .9rem;
+    width: .9rem;
+    background-color: #fff;
+    border-radius: 2rem; }
+  .marker.on-enter {
+    z-index: 1000; }
+
+.marker-church {
+  background-color: var(--church-color); }
+
+.marker-synagogue {
+  background-color: var(--synagogue-color); }
+
+.marker-monastery {
+  background-color: var(--monastery-color); }
+
+.marker-temple {
+  background-color: var(--temple-color); }
+
+.marker-mosque {
+  background-color: var(--mosque-color); }
+
+.marker-shrine {
+  background-color: var(--shrine-color); }
 
 .hide {
   display: none; }

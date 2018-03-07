@@ -5,9 +5,10 @@ import helpers from './helpers.js';
 
 const map = {
 	imageCon: helpers.getElement('#image-con'),
+	filterItems: ['synagogue', 'monastery', 'temple', 'church', 'mosque', 'shrine'],
 	filterBtns: [],
 	mapMarkers: [],
-	
+
 	initMapGoogle(data) {
 		console.log('Google map init');
 
@@ -32,23 +33,39 @@ const map = {
 
 		// L.tileLayer('https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png', {
 		L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-		// L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+			// L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
 			// L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_nolabels/{z}/{x}/{y}.png', {
-			maxZoom: 15,
+			maxZoom: 16,
 			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
 			// id: 'CartoDB.DarkMatterNoLabels',
 			id: 'Thunderforest.Pioneer',
-			maxZoom: 15
 		}).addTo(mymap);
 
 
 		// Map the locations on the map
 		data.results.bindings.forEach(item => {
+			// console.log(item);
+
 			if (!item.coordinate_location) return;
 			const lat = item.coordinate_location.value[1];
 			const lng = item.coordinate_location.value[0];
 
-			const marker = L.marker([lat, lng], { ...item, })
+			const buildingKeys = Object.keys(item);
+			const foundKey = buildingKeys.filter(key => {
+				if (this.filterItems.includes(key)) return true;
+				return false;
+			})
+			
+			const myIcon = L.divIcon({
+				className: null,
+				iconSize: null,
+				html: `
+					<div class="marker marker-${foundKey}">
+						<div></div>
+					</div>`
+			});
+
+			const marker = L.marker([lat, lng], { ...item, icon: myIcon })
 				.addTo(mymap)
 				.on('click', function (e) {
 					const data = e.target.options;
@@ -61,15 +78,20 @@ const map = {
 						img.src = data.image.value;
 						img.title = data.image.value;
 						// console.log(img);
-						
+
 						map.imageCon.appendChild(img);
 					}
-			})
+				})
+				// .on('mouseover', function(e) {
+					// // L.DomUtil.addClass(e.target._icon, 'on-enter');
+				// })
+				// .on('mouseout', function(e) {
+					// // L.DomUtil.removeClass(e.target._icon, 'on-enter');
+				// })
 
 			this.mapMarkers.push(marker); // 
-			
-		})
 
+		});
 	},
 
 	refreshMap() {
@@ -90,6 +112,7 @@ const map = {
 			// Thanks to this mate: https://stackoverflow.com/a/39893636/8525996
 			// Checks whether a array contains a same array item from another array
 			const foundKeys = buildingKeys.some(key => activeFilters.includes(key))
+
 
 			if (foundKeys) {
 				// Leaflet method

@@ -8,9 +8,6 @@ import helpers from './helpers.js';
 (function () {
 	const app = {
 		header: helpers.getElement('#header'),
-		filterItems: ['synagogue', 'monastery', 'temple', 'church', 'mosque', 'shrine'],
-		activeFilterItems: ['synagogue', 'monastery', 'temple', 'church', 'mosque', 'shrine'],
-
 		init() {
 			api.init()
 				.then( async res => {
@@ -26,7 +23,7 @@ import helpers from './helpers.js';
 		},
 
 		assignFilterBtns(data) {
-			this.filterItems.forEach(item => {
+			map.filterItems.forEach(item => {
 				// They are checkboxes thou
 				let filterBtn = helpers.createElement('input');
 				let filterBtnLabel = helpers.createElement('label');
