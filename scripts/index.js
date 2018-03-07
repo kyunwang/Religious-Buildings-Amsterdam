@@ -2,11 +2,12 @@
 
 import api from './api.js';
 import map from './map.js';
-import storage from './storage.js'
+import storage from './storage.js';
+import helpers from './helpers.js';
 
 (function () {
 	const app = {
-		header: document.getElementById('header'),
+		header: helpers.getElement('#header'),
 		filterItems: ['synagogue', 'monastery', 'temple', 'church', 'mosque', 'shrine'],
 		activeFilterItems: ['synagogue', 'monastery', 'temple', 'church', 'mosque', 'shrine'],
 
@@ -16,7 +17,7 @@ import storage from './storage.js'
 					// console.log(res.results.bindings);
 					storage.buildingData = res;
 					await this.assignFilterBtns(); // Assing and create the buttons first
-					map.filterBtns = document.querySelectorAll('.filter-btn'); // Then get them for later use
+					map.filterBtns = helpers.getElements('.filter-btn'); // Then get them for later use
 					return res;
 				}).then(res => {
 					// map.initMapLeaflet(res);
@@ -27,8 +28,8 @@ import storage from './storage.js'
 		assignFilterBtns(data) {
 			this.filterItems.forEach(item => {
 				// They are checkboxes thou
-				let filterBtn = document.createElement('input');
-				let filterBtnLabel = document.createElement('label');
+				let filterBtn = helpers.createElement('input');
+				let filterBtnLabel = helpers.createElement('label');
 
 				filterBtnLabel.htmlFor = `button-${item}`;
 				filterBtnLabel.textContent = `button-${item}`;

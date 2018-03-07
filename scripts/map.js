@@ -1,16 +1,17 @@
 'use strict';
 
 import storage from './storage.js';
+import helpers from './helpers.js';
 
 const map = {
-	imageCon: document.getElementById('image-con'),
+	imageCon: helpers.getElement('#image-con'),
 	filterBtns: [],
 	mapMarkers: [],
 	
 	initMapGoogle(data) {
 		console.log('Google map init');
 
-		const map = new google.maps.Map(document.getElementById('map'), {
+		const map = new google.maps.Map(helpers.getElement('#map'), {
 			center: { lat: 52.3675, lng: 4.905278 },
 			zoom: 8
 		});
@@ -56,7 +57,7 @@ const map = {
 						map.imageCon.classList.toggle('show');
 
 						// console.log(data);
-						let img = document.createElement('img');
+						let img = helpers.createElement('img');
 						img.src = data.image.value;
 						img.title = data.image.value;
 						// console.log(img);
@@ -72,21 +73,42 @@ const map = {
 	},
 
 	refreshMap() {
-		const markers = document.querySelectorAll('.leaflet-marker-icon');
+		const markers = helpers.getElements('.leaflet-marker-icon');
 		console.log('Refresh map');
-		console.log(this.filterBtns);
+		console.log(this.filterBtns, this.mapMarkers);
+		// console.log(this.filterBtns);
 
-		// this.filterBtns.forEach(filterNode => {
-		// 	console.log(filterNode.checked);
-			
-		// })
-		
-		this.mapMarkers.map(item => {
-			// console.log(item.options);
-			console.log(Object.keys(item.options));
-			const keys = Object.keys(item.options)
-			let found = keys.some(r=> arr2.includes(r))
+		let me = [];
+
+		this.filterBtns.forEach(filterNode => {
+			if (filterNode.checked) {
+				me.push(filterNode.name);
+			}
 		})
+
+		console.log('list:' ,me);
+		
+		
+		// const filteredData = this.mapMarkers.filter(item => {
+		this.mapMarkers.forEach(item => {
+			// console.log(item.options);
+			const keys = Object.keys(item.options)
+			let found = keys.some(r => me.includes(r))
+
+			if (found) {
+				// item.classList.remove('hide');
+				item.removeClass('hide');
+				return true;
+			}
+			
+			item.addClass('hide');
+			// item.classList.add('hide');
+			return false;
+		})
+
+		
+
+		
 
 		// storage.buildingData.results.bindings
 	}
