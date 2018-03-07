@@ -1,7 +1,7 @@
 :root {
     --church-color: lightseagreen;
     --synagogue-color: gray;
-    --monastery-color: lightcoral;
+    --monastery-color: violet;
     --temple-color: yellow;
     --mosque-color: lightblue;
     --shrine-color: salmon;
@@ -68,9 +68,38 @@ header {
 ===========================*/
 
 .filter-btn {
-    &:checked {}
+    &:checked {
+        &+label {
+            // color: var(--(attr(name))-color);
+            // color: attr(data-color); // Only returns a string 😞
+        }
+    }
     &:hover,
     &:focus {}
+}
+
+.label-church {
+    border-bottom: 3px solid var(--church-color);
+}
+
+.label-synagogue {
+    border-bottom: 3px solid var(--synagogue-color); //  background-color: var(--synagogue-color);
+}
+
+.label-monastery {
+    border-bottom: 3px solid var(--monastery-color); //  background-color: var(--monastery-color);
+}
+
+.label-temple {
+    border-bottom: 3px solid var(--temple-color); //  background-color: var(--temple-color);
+}
+
+.label-mosque {
+    border-bottom: 3px solid var(--mosque-color); //  background-color: var(--mosque-color);
+}
+
+.label-shrine {
+    border-bottom: 3px solid var(--shrine-color); //  background-color: var(--shrine-color);
 }
 
 

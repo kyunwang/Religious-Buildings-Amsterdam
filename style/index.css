@@ -1,7 +1,7 @@
 :root {
   --church-color: lightseagreen;
   --synagogue-color: gray;
-  --monastery-color: lightcoral;
+  --monastery-color: violet;
   --temple-color: yellow;
   --mosque-color: lightblue;
   --shrine-color: salmon; }
@@ -52,6 +52,24 @@ header {
 /*==========================
 === Filter styles
 ===========================*/
+.label-church {
+  border-bottom: 3px solid var(--church-color); }
+
+.label-synagogue {
+  border-bottom: 3px solid var(--synagogue-color); }
+
+.label-monastery {
+  border-bottom: 3px solid var(--monastery-color); }
+
+.label-temple {
+  border-bottom: 3px solid var(--temple-color); }
+
+.label-mosque {
+  border-bottom: 3px solid var(--mosque-color); }
+
+.label-shrine {
+  border-bottom: 3px solid var(--shrine-color); }
+
 /*==========================
 === Marker styles
 ===========================*/

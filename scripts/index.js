@@ -30,7 +30,9 @@ import helpers from './helpers.js';
 
 				// Adding attributes to the checkbox's label
 				filterBtnLabel.htmlFor = `button-${item}`;
-				filterBtnLabel.textContent = `button-${item}`;
+				filterBtnLabel.textContent = `${item.charAt(0).toUpperCase()}${item.slice(1)}`;
+				// filterBtnLabel.textContent = `button-${item}`;
+				filterBtnLabel.className = `label-${item}`;
 
 				// Adding attributes to the checkbox
 				filterBtn.type = 'checkbox';
@@ -38,6 +40,7 @@ import helpers from './helpers.js';
 				filterBtn.className = 'filter-btn';
 				filterBtn.value = item;
 				filterBtn.name = item;
+				// filterBtn.dataset.color = `var(--${item}-color)`; // Does not work 😞
 				filterBtn.checked = true;
 				filterBtn.textContent = item;
 				
