@@ -1,7 +1,12 @@
 'use strict';
 
+import storage from './storage.js';
+
 const map = {
 	imageCon: document.getElementById('image-con'),
+	filterBtns: [],
+	mapMarkers: [],
+	
 	initMapGoogle(data) {
 		console.log('Google map init');
 
@@ -42,9 +47,7 @@ const map = {
 			const lat = item.coordinate_location.value[1];
 			const lng = item.coordinate_location.value[0];
 
-			const marker = L.marker([lat, lng], {
-				...item,
-			})
+			const marker = L.marker([lat, lng], { ...item, })
 				.addTo(mymap)
 				.on('click', function (e) {
 					const data = e.target.options;
@@ -52,18 +55,40 @@ const map = {
 					if (data.image) {
 						map.imageCon.classList.toggle('show');
 
-						console.log(data);
+						// console.log(data);
 						let img = document.createElement('img');
 						img.src = data.image.value;
 						img.title = data.image.value;
-						console.log(img);
+						// console.log(img);
 						
 						map.imageCon.appendChild(img);
 					}
 			})
+
+			this.mapMarkers.push(marker); // 
 			
 		})
 
+	},
+
+	refreshMap() {
+		const markers = document.querySelectorAll('.leaflet-marker-icon');
+		console.log('Refresh map');
+		console.log(this.filterBtns);
+
+		// this.filterBtns.forEach(filterNode => {
+		// 	console.log(filterNode.checked);
+			
+		// })
+		
+		this.mapMarkers.map(item => {
+			// console.log(item.options);
+			console.log(Object.keys(item.options));
+			const keys = Object.keys(item.options)
+			let found = keys.some(r=> arr2.includes(r))
+		})
+
+		// storage.buildingData.results.bindings
 	}
 }
 

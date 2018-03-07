@@ -43,4 +43,16 @@ header {
     }
 }
 
+.filter-btn {
+    &:checked {}
+    &:hover,
+    &:focus {}
+}
+
 .leaflet-marker-icon {}
+
+.show {}
+
+.hide {
+    display: none;
+}

@@ -1,6 +1,7 @@
 'user strict';
 
 const storage = {
+	buildingData: [],
 	filterData(data) {
 		console.log(data.results);
 	},

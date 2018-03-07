@@ -34,3 +34,6 @@ header {
   z-index: 1000; }
   #image-con.show {
     transform: translateY(0); }
+
+.hide {
+  display: none; }
