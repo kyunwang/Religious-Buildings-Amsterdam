@@ -31,9 +31,11 @@ import helpers from './helpers.js';
 				let filterBtn = helpers.createElement('input');
 				let filterBtnLabel = helpers.createElement('label');
 
+				// Adding attributes to the checkbox's label
 				filterBtnLabel.htmlFor = `button-${item}`;
 				filterBtnLabel.textContent = `button-${item}`;
 
+				// Adding attributes to the checkbox
 				filterBtn.type = 'checkbox';
 				filterBtn.id = `button-${item}`;
 				filterBtn.className = 'filter-btn';
@@ -42,14 +44,16 @@ import helpers from './helpers.js';
 				filterBtn.checked = true;
 				filterBtn.textContent = item;
 				
+				// Not needed to do refreshing like this anymore
 				filterBtn.addEventListener('change', this.refreshMap(item))
 
+				// Appending the checkboxes
 				app.header.appendChild(filterBtn);
 				app.header.appendChild(filterBtnLabel);
 			})
 		},
-
-		refreshMap(data) {
+		// Not needed to do refreshing like this anymore
+		refreshMap() {
 			// A Closure making use of Currying ^^
 			return function() {
 				// console.log('refreshMap', data, storage.buildingData);
