@@ -73,44 +73,31 @@ const map = {
 	},
 
 	refreshMap() {
-		const markers = helpers.getElements('.leaflet-marker-icon');
-		console.log('Refresh map');
-		console.log(this.filterBtns, this.mapMarkers);
-		// console.log(this.filterBtns);
+		let activeFilters = [];
 
-		let me = [];
-
+		// Gettin the active filters
 		this.filterBtns.forEach(filterNode => {
 			if (filterNode.checked) {
-				me.push(filterNode.name);
+				activeFilters.push(filterNode.name);
 			}
 		})
 
-		console.log('list:' ,me);
-		
-		
-		// const filteredData = this.mapMarkers.filter(item => {
+		// Display * Hide marker logic
 		this.mapMarkers.forEach(item => {
-			// console.log(item.options);
-			const keys = Object.keys(item.options)
-			let found = keys.some(r => me.includes(r))
+			// Getting all the keys of an item to compare with
+			const buildingKeys = Object.keys(item.options);
 
-			if (found) {
-				// item.classList.remove('hide');
-				item.removeClass('hide');
-				return true;
+			// Thanks to this mate: https://stackoverflow.com/a/39893636/8525996
+			// Checks whether a array contains a same array item from another array
+			const foundKeys = buildingKeys.some(key => activeFilters.includes(key))
+
+			if (foundKeys) {
+				// Leaflet method
+				L.DomUtil.removeClass(item._icon, 'hide')
+			} else {
+				L.DomUtil.addClass(item._icon, 'hide')
 			}
-			
-			item.addClass('hide');
-			// item.classList.add('hide');
-			return false;
 		})
-
-		
-
-		
-
-		// storage.buildingData.results.bindings
 	}
 }
 
