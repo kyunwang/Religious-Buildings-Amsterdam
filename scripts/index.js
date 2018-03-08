@@ -11,25 +11,12 @@ import helpers from './helpers.js';
 		init() {
 			api.init()
 				.then( async res => {
-					// console.log(res.results.bindings);
 					storage.buildingData = res;
 					await this.assignFilterBtns(); // Assing and create the buttons first
 					map.filterBtns = helpers.getElements('.filter-btn'); // Then get them for later use
 					// return res;
 				}).then(() => {
-					// console.log(1,storage.buildingData.results.bindings.length);
-					
-					// const test = helpers.groupItems(storage.buildingData.results.bindings);
-					// 	// console.log(...item);
-					// 	// return []
-					// })
-
-					// console.log(test);
-					
-					// map.initMapLeaflet(res);
-
-					// helpers.groupItems
-
+					storage.groupItems(storage.buildingData.results.bindings);
 
 					map.initMap(storage.buildingData);
 				})
