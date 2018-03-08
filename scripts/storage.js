@@ -11,12 +11,10 @@ const storage = {
 	cleanData(data) {
 		// Need to refactor this
 		data.results.bindings = data.results.bindings.map(item => {
-			// console.log(item);
-			if (!item.coordinate_location) return item;
-
-
 			item.buildYear = helpers.randomYear();
 			item.demolishYear = helpers.randomYear(item.buildYear);
+
+			if (!item.coordinate_location) return item;
 
 			// Clean and create usable coordinates
 			let coords = item.coordinate_location.value
@@ -46,9 +44,6 @@ const storage = {
 			return item;
 		});
 		return data;
-	},
-	allYears(data) {
-
 	},
 	groupItems(dataArray) {
 		// Thanks to https://stackoverflow.com/a/33850667/8525996

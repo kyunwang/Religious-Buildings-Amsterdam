@@ -131,8 +131,22 @@ const map = {
 			}
 		})
 	},
-	refreshYearMap() {
-		console.log('Refresh year map');
+	refreshYearMap(label) {
+		return function (e) {
+			console.log('Refresh year map');
+			const selectedYear = e.target.value;
+
+			label.textContent = selectedYear;
+			
+			map.mapMarkers.forEach(item => {
+				if (item.options.buildYear <= selectedYear) {
+					item._element.classList.remove('hide-year');
+				} else {
+					item._element.classList.add('hide-year');
+				}
+			})
+		}
+
 		
 	},
 	toggleDetail(marker) {

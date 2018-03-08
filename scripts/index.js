@@ -11,9 +11,14 @@ import helpers from './helpers.js';
 		filterContainer: helpers.getElement('#filter-container'),
 		init() {
 			api.init()
-				.then( async res => {
+				.then(async res => {
 					storage.buildingData = res;
-					await this.assignFilterCheckboxes(); // Assing and create the buttons first
+
+					Promise.all([
+						await this.assignFilterCheckboxes(), // Assign and create the buttons first
+						await this.assignYearSlider()
+					]);
+
 					map.filterCheckboxes = helpers.getElements('.filter-checkbox'); // Then get them for later use
 					// return res;
 				}).then(() => {
@@ -58,7 +63,39 @@ import helpers from './helpers.js';
 				app.filterContainer.appendChild(filterCheckboxLabel);
 			})
 		},
+		assignYearSlider() {
+			console.log('assign year slider');
+			let filterSlider = helpers.createElement('input');
+			let filterSliderLabel = helpers.createElement('label');
 
+			// Adding attributes to the slider's label
+			filterSliderLabel.htmlFor = 'slider-year';
+			filterSliderLabel.textContent = 'test';
+			filterSliderLabel.className = 'label-slider';
+
+			filterSlider.type = 'range';
+			filterSlider.step = 5;
+			filterSlider.id = 'slider-year';
+			
+			const data = storage.buildingData.results.bindings;
+			console.log(data);
+			
+			const min = Math.min.apply(Math, data.map(item => item.buildYear));
+			const max = Math.max.apply(Math, data.map(item => item.demolishYear));
+			
+			console.log(min, max);
+			
+			filterSlider.min = min;
+			filterSlider.max = max;
+
+			filterSlider.addEventListener('change', map.refreshYearMap(filterSliderLabel));
+
+
+
+			app.filterContainer.appendChild(filterSlider);
+			app.filterContainer.appendChild(filterSliderLabel);
+			
+		},
 		// Not needed to do refreshing like this anymore
 		refreshMap() {
 			// A Closure making use of Currying ^^
