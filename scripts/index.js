@@ -5,6 +5,8 @@ import map from './map.js';
 import storage from './storage.js';
 import helpers from './helpers.js';
 
+import { MAPBOX_GL_TOKEN } from './secret.js';
+
 (function () {
 	const app = {
 		header: helpers.getElement('header'),
@@ -21,7 +23,14 @@ import helpers from './helpers.js';
 
 					map.filterCheckboxes = helpers.getElements('.filter-checkbox'); // Then get them for later use
 					// return res;
-				}).then(() => {
+				})
+				.then(() => {
+					// Initiate mapboxgl here
+					// To hide the accesstoken which will be hardcoded
+					// when hosting it on my server
+					mapboxgl.accessToken = MAPBOX_GL_TOKEN;
+				})
+				.then(() => {
 					storage.groupItems(storage.buildingData.results.bindings);
 
 					map.initMap(storage.buildingData);

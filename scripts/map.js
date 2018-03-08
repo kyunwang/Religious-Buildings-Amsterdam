@@ -2,8 +2,6 @@
 import storage from './storage.js';
 import helpers from './helpers.js';
 
-import { MAPBOX_GL_TOKEN } from './secret.js';
-
 const map = {
 	// imageCon: helpers.getElement('#image-con'),
 	// imageCon: helpers.getElement('aside'),
@@ -14,8 +12,6 @@ const map = {
 	filterCheckboxes: [],
 	mapMarkers: [],
 	initMap(data) {
-		mapboxgl.accessToken = MAPBOX_GL_TOKEN;
-
 		var myMap = new mapboxgl.Map({
 			container: 'map',
 			style: 'mapbox://styles/mapbox/light-v9',
