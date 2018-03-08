@@ -10,6 +10,7 @@
 		"dev": "concurrently --kill-others \"npm run browser-sync\" \"npm run node-sass\"",
 		"browser-sync": "browser-sync start --server --files \"*.html, style/*.css, scripts/*.js\"",
 		"node-sass": "node-sass -w style/index.scss -o style/",
+		"push": "git push && git checkout master && git merge develop && git push && git checkout develop",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
