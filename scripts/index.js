@@ -18,7 +18,7 @@ import helpers from './helpers.js';
 					return res;
 				}).then(res => {
 					// map.initMapLeaflet(res);
-					map.initMapLeaflet(storage.buildingData);
+					map.initMap(storage.buildingData);
 				})
 		},
 

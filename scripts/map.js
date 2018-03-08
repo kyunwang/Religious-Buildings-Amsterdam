@@ -1,9 +1,8 @@
 'use strict';
-
 import storage from './storage.js';
 import helpers from './helpers.js';
 
-import { WRLD_API_KEY } from './secret.js';
+import { MAPBOX_GL_TOKEN } from './secret.js';
 
 const map = {
 	imageCon: helpers.getElement('#image-con'),
@@ -29,31 +28,32 @@ const map = {
 			});
 		})
 	},
-	initMapLeaflet(data) {
-		var mymap = L.map('map')
-			.setView([52.3675, 4.905278], 13);
+	initMap(data) {
+		mapboxgl.accessToken = MAPBOX_GL_TOKEN;
 
-		// const mymap = L.Wrld.map('map', WRLD_API_KEY, {
-		// 	center: [52.3675, 4.905278],
-		// 	zoom: 15
-		// });
+		var map = new mapboxgl.Map({
+			container: 'map',
+			style: 'mapbox://styles/mapbox/light-v9',
+			// center: [52.3675, 4.905278],
+			center: [4.905278, 52.3675],
+			zoom: 14
+		});
 
-		// var mymap = L.Wrld.map("map", WRLD_API_KEY, {
-		// 	// center: [51.514613, -0.081019], // London
-		// 	center: [52.3675, 4.905278], // Amsterdam
-		// 	zoom: 16
-		//  });
+		console.log(storage.geo);
 
-		// L.tileLayer('https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png', {
-		L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-			// L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-			// L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_nolabels/{z}/{x}/{y}.png', {
-			maxZoom: 16,
-			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-			// id: 'CartoDB.DarkMatterNoLabels',
-			id: 'Thunderforest.Pioneer',
-		}).addTo(mymap);
 
+		storage.geo.features.forEach(function(marker) {
+
+			// create a HTML element for each feature
+			var el = document.createElement('div');
+			el.className = 'marker';
+		 
+			// make a marker for each feature and add to the map
+			new mapboxgl.Marker(el)
+				.setLngLat(marker.geometry.coordinates)
+				.addTo(map);
+		 });
+		
 
 		// Map the locations on the map
 		data.results.bindings.forEach(item => {
@@ -66,42 +66,6 @@ const map = {
 				if (this.filterItems.includes(key)) return true;
 				return false;
 			})
-			
-			const myIcon = L.divIcon({
-				className: null,
-				iconSize: null,
-				html: `
-					<div class="marker marker-${foundKey}">
-						<div></div>
-					</div>`
-			});
-
-			const marker = L.marker([lat, lng], { ...item, icon: myIcon })
-				.addTo(mymap)
-				.on('click', function (e) {
-					const data = e.target.options;
-
-					if (data.image) {
-						map.imageCon.classList.toggle('show');
-
-						// console.log(data);
-						let img = helpers.createElement('img');
-						img.src = data.image.value;
-						img.title = data.image.value;
-						// console.log(img);
-
-						map.imageCon.appendChild(img);
-					}
-				})
-				// .on('mouseover', function(e) {
-					// // L.DomUtil.addClass(e.target._icon, 'on-enter');
-				// })
-				// .on('mouseout', function(e) {
-					// // L.DomUtil.removeClass(e.target._icon, 'on-enter');
-				// })
-
-			this.mapMarkers.push(marker); // 
-
 		});
 	},
 
