@@ -5,7 +5,8 @@
     --temple-color: yellow;
     --mosque-color: lightblue;
     --shrine-color: salmon;
-    --def-transition: all .1s ease-in;
+    --def-transition: all .3s ease-in;
+    --def-transition-fast: all .1s ease-in;
 }
 
 *,
@@ -21,8 +22,14 @@ body {
     position: relative;
     height: 100%;
     margin: 0;
-    padding: 0;
-    overflow: hidden;
+    padding: 0; //  overflow: hidden;
+    font-family: 'open sans', sans-serif;
+}
+
+body {
+    display: grid; //  grid-template-areas: "filter" "map" "map";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
 }
 
 
@@ -31,12 +38,7 @@ body {
 ===========================*/
 
 img {
-    // width: 10rem;
     max-height: 20rem;
-}
-
-header {
-    height: 15%;
 }
 
 
@@ -45,22 +47,38 @@ header {
 ===========================*/
 
 #map {
-    height: 85%;
+    position: relative;
+    grid-row: 2 / span 2;
+    &::after {
+        content: "";
+        transition: var(--def-transition);
+    }
+    &.show {
+        &::after {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
+            background: rgba(0, 0, 0, .3);
+        }
+        aside {
+            transform: translateX(0);
+        }
+    }
 }
 
-#image-con {
+aside {
     position: absolute;
-    bottom: 0;
-    height: 15rem;
-    width: 100%;
-    background-color: transparent;
-    background-color: red;
-    transform: translateY(100%);
+    right: 0;
+    height: 100%;
+    width: 20rem;
+    z-index: 100;
+    background: #fff;
     transition: .3s all;
-    z-index: 1000;
-    &.show {
-        transform: translateY(0);
-    }
+    transform: translateX(100%);
+    &.show {}
 }
 
 
@@ -68,7 +86,24 @@ header {
 === Filter styles
 ===========================*/
 
-.filter-btn {
+#filter-container {
+    grid-row: 1/1;
+    height: min-content;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    overflow-y: visible;
+    z-index: 100;
+}
+
+label {
+    border-bottom-width: 0px;
+    transition: var(--def-transition-fast);
+    padding: .5rem 1.5rem;
+    font-size: .9em;
+}
+
+.filter-checkbox {
     position: absolute;
     left: -9999999px;
     &:hover,
@@ -100,28 +135,6 @@ header {
     &:focus {}
 }
 
-label {
-    transition: var(--def-transition); //  border-bottom-width: 0px;
-}
-
-// .label-church {
-//     border-bottom: 3px solid var(--church-color);
-// }
-// .label-synagogue {
-//     border-bottom: 3px solid var(--synagogue-color); //  background-color: var(--synagogue-color);
-// }
-// .label-monastery {
-//     border-bottom: 3px solid var(--monastery-color); //  background-color: var(--monastery-color);
-// }
-// .label-temple {
-//     border-bottom: 3px solid var(--temple-color); //  background-color: var(--temple-color);
-// }
-// .label-mosque {
-//     border-bottom: 3px solid var(--mosque-color); //  background-color: var(--mosque-color);
-// }
-// .label-shrine {
-//     border-bottom: 3px solid var(--shrine-color); //  background-color: var(--shrine-color);
-// }
 
 /*==========================
 === Marker styles
@@ -135,7 +148,8 @@ label {
     width: 1.5rem;
     border-radius: 1.5rem;
     overflow: hidden;
-    div {
+    &::before {
+        content: "";
         height: .9rem;
         width: .9rem;
         background-color: #fff;
@@ -147,6 +161,14 @@ label {
     &.on-leave {}
 }
 
+// .marker {
+//     background-image: url('../static/images/mapbox-icon.png');
+//     background-size: cover;
+//     width: 50px;
+//     height: 50px;
+//     border-radius: 50%;
+//     cursor: pointer;
+// }
 .marker-church {
     background-color: var(--church-color);
 }
@@ -173,6 +195,8 @@ label {
 
 .show {}
 
-.hide {
+.hide,
+.hide-filter,
+.hide-year {
     display: none;
 }

@@ -1,137 +1,173 @@
 'use strict';
-
 import storage from './storage.js';
 import helpers from './helpers.js';
 
-import { WRLD_API_KEY } from './secret.js';
+import { MAPBOX_GL_TOKEN } from './secret.js';
 
 const map = {
-	imageCon: helpers.getElement('#image-con'),
-	filterItems: ['synagogue', 'monastery', 'temple', 'church', 'mosque', 'shrine'],
-	filterBtns: [],
+	// imageCon: helpers.getElement('#image-con'),
+	// imageCon: helpers.getElement('aside'),
+	imageCon: helpers.getElement('#map'),
+	imageConDiv: helpers.getElement('aside > div'),
+	imageConClose: helpers.getElement('aside > button'),
+	filterItems: [],
+	filterCheckboxes: [],
 	mapMarkers: [],
+	initMap(data) {
+		mapboxgl.accessToken = MAPBOX_GL_TOKEN;
 
-	initMapGoogle(data) {
-		console.log('Google map init');
-
-		const map = new google.maps.Map(helpers.getElement('#map'), {
-			center: { lat: 52.3675, lng: 4.905278 },
-			zoom: 8
+		var myMap = new mapboxgl.Map({
+			container: 'map',
+			style: 'mapbox://styles/mapbox/light-v9',
+			// center: [52.3675, 4.905278],
+			center: [4.905278, 52.3675],
+			zoom: 14,
+			pitch: 45,
+			bearing: -17.6,
+			hash: true,
 		});
 
-		data.results.bindings.forEach(item => {
-			if (!item.coordinate_location) return;
-			const lat = item.coordinate_location.value[1];
-			const lng = item.coordinate_location.value[0];
-			new google.maps.Marker({
-				position: { lat, lng },
-				map: map
-			});
-		})
-	},
-	initMapLeaflet(data) {
-		var mymap = L.map('map')
-			.setView([52.3675, 4.905278], 13);
-
-		// const mymap = L.Wrld.map('map', WRLD_API_KEY, {
-		// 	center: [52.3675, 4.905278],
-		// 	zoom: 15
-		// });
-
-		// var mymap = L.Wrld.map("map", WRLD_API_KEY, {
-		// 	// center: [51.514613, -0.081019], // London
-		// 	center: [52.3675, 4.905278], // Amsterdam
-		// 	zoom: 16
-		//  });
-
-		// L.tileLayer('https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png', {
-		L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-			// L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-			// L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_nolabels/{z}/{x}/{y}.png', {
-			maxZoom: 16,
-			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-			// id: 'CartoDB.DarkMatterNoLabels',
-			id: 'Thunderforest.Pioneer',
-		}).addTo(mymap);
-
+		this.imageConClose.addEventListener('click', this.closeDetail);
 
 		// Map the locations on the map
 		data.results.bindings.forEach(item => {
 			if (!item.coordinate_location) return;
-			const lat = item.coordinate_location.value[1];
-			const lng = item.coordinate_location.value[0];
 
+			// 
 			const buildingKeys = Object.keys(item);
 			const foundKey = buildingKeys.filter(key => {
 				if (this.filterItems.includes(key)) return true;
 				return false;
 			})
-			
-			const myIcon = L.divIcon({
-				className: null,
-				iconSize: null,
-				html: `
-					<div class="marker marker-${foundKey}">
-						<div></div>
-					</div>`
-			});
 
-			const marker = L.marker([lat, lng], { ...item, icon: myIcon })
-				.addTo(mymap)
-				.on('click', function (e) {
-					const data = e.target.options;
 
-					if (data.image) {
-						map.imageCon.classList.toggle('show');
+			// create a HTML element for each feature
+			const markerCon = document.createElement('div');
+			markerCon.classList.add('marker', `marker-${item.type.value}`);
+			// el.className = `marker-${foundKey}`;
 
-						// console.log(data);
-						let img = helpers.createElement('img');
-						img.src = data.image.value;
-						img.title = data.image.value;
-						// console.log(img);
+			// make a marker for each feature and add to the map
 
-						map.imageCon.appendChild(img);
-					}
-				})
-				// .on('mouseover', function(e) {
-					// // L.DomUtil.addClass(e.target._icon, 'on-enter');
-				// })
-				// .on('mouseout', function(e) {
-					// // L.DomUtil.removeClass(e.target._icon, 'on-enter');
-				// })
+			const marker = new mapboxgl.Marker(markerCon)
+				.setLngLat(item.coordinate_location.value.geometry.coordinates)
+				.addTo(myMap);
 
-			this.mapMarkers.push(marker); // 
+			marker.options = item;
 
+
+			markerCon.addEventListener('click', function () {
+				map.toggleDetail(marker);
+			});			
+
+			map.mapMarkers.push(marker); // 
 		});
+
+
+		// The 'building' layer in the mapbox-streets vector source contains building-height
+		// data from OpenStreetMap.
+		myMap.on('load', function () {
+			// Insert the layer beneath any symbol layer.
+			var layers = myMap.getStyle().layers;
+
+			var labelLayerId;
+			for (var i = 0; i < layers.length; i++) {
+				if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+					labelLayerId = layers[i].id;
+					break;
+				}
+			}
+
+			myMap.addLayer({
+				'id': '3d-buildings',
+				'source': 'composite',
+				'source-layer': 'building',
+				'filter': ['==', 'extrude', 'true'],
+				'type': 'fill-extrusion',
+				'minzoom': 15,
+				'paint': {
+					'fill-extrusion-color': '#aaa',
+
+					// use an 'interpolate' expression to add a smooth transition effect to the
+					// buildings as the user zooms in
+					'fill-extrusion-height': [
+						"interpolate", ["linear"], ["zoom"],
+						15, 0,
+						15.2, ["get", "height"]
+					],
+					'fill-extrusion-base': [
+						"interpolate", ["linear"], ["zoom"],
+						15, 0,
+						15.2, ["get", "min_height"]
+					],
+					'fill-extrusion-opacity': .6
+				}
+			}, labelLayerId);
+		});
+
 	},
 
-	refreshMap() {
+	refreshFilterMap() {
+		console.log('Refresh filter map');
+
 		let activeFilters = [];
 
 		// Gettin the active filters
-		this.filterBtns.forEach(filterNode => {
+		map.filterCheckboxes.forEach(filterNode => {
 			if (filterNode.checked) {
 				activeFilters.push(filterNode.name);
 			}
-		})
+		});
 
 		// Display * Hide marker logic
-		this.mapMarkers.forEach(item => {
-			// Getting all the keys of an item to compare with
-			const buildingKeys = Object.keys(item.options);
-
+		map.mapMarkers.forEach(item => {
 			// Thanks to this mate: https://stackoverflow.com/a/39893636/8525996
 			// Checks whether a array contains a same array item from another array
-			const foundKeys = buildingKeys.some(key => activeFilters.includes(key))
-
+			const foundKeys = activeFilters.includes(item.options.type.value)
 
 			if (foundKeys) {
-				// Leaflet method
-				L.DomUtil.removeClass(item._icon, 'hide')
+				item._element.classList.remove('hide-filter');
 			} else {
-				L.DomUtil.addClass(item._icon, 'hide')
+				item._element.classList.add('hide-filter');
 			}
 		})
+	},
+	refreshYearMap(label) {
+		return function (e) {
+			console.log('Refresh year map');
+			const selectedYear = e.target.value;
+
+			label.textContent = selectedYear;
+			
+			map.mapMarkers.forEach(item => {
+				if (item.options.buildYear <= selectedYear) {
+					item._element.classList.remove('hide-year');
+				} else {
+					item._element.classList.add('hide-year');
+				}
+			})
+		}
+
+		
+	},
+	toggleDetail(marker) {
+		const data = marker.options;
+
+		if (data.image) {
+			map.imageConDiv.innerHTML = ''; // Quick hacky way to clear the children ( time mann 😢)
+			map.imageCon.classList.toggle('show');
+
+			data.image.value.forEach(image => {
+				let img = helpers.createElement('img');
+				img.src = image;
+				img.title = image;
+				
+				map.imageConDiv.appendChild(img);
+			})
+		}
+	},
+	closeDetail() {
+		map.imageCon.classList.remove('show');
+		map.imageConDiv.innerHTML = ''; // Quick hacky way to clear the children ( time mann 😢)
 	}
 }
 
