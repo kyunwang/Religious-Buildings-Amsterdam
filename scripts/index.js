@@ -15,8 +15,17 @@ import helpers from './helpers.js';
 					storage.buildingData = res;
 					await this.assignFilterBtns(); // Assing and create the buttons first
 					map.filterBtns = helpers.getElements('.filter-btn'); // Then get them for later use
-					return res;
-				}).then(res => {
+					// return res;
+				}).then(() => {
+					// console.log(1,storage.buildingData.results.bindings.length);
+					
+					// const test = helpers.groupItems(storage.buildingData.results.bindings, function(item) {
+					// 	// console.log(...item);
+					// 	// return []
+					// })
+
+					// console.log(test);
+					
 					// map.initMapLeaflet(res);
 					map.initMap(storage.buildingData);
 				})

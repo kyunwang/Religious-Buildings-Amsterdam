@@ -1,5 +1,7 @@
 'user strict';
 
+import helpers from './helpers.js';
+
 const storage = {
 	buildingData: [],
 	geojson: { type: 'FeatureCollection', features: [] },
@@ -13,6 +15,15 @@ const storage = {
 			if (!item.coordinate_location) return item;
 
 			// console.log(item);
+
+
+			item.buildYear = helpers.randomYear();
+			item.demolishYear = helpers.randomYear(item.buildYear);
+
+			console.log('BuildYear' ,item.buildYear);
+			console.log('Demolish' ,item.demolishYear);
+			
+
 
 			// Clean and create usable coordinates
 			let coords = item.coordinate_location.value

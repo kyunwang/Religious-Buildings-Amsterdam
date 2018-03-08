@@ -36,29 +36,14 @@ const map = {
 			style: 'mapbox://styles/mapbox/light-v9',
 			// center: [52.3675, 4.905278],
 			center: [4.905278, 52.3675],
-			zoom: 14
+			zoom: 14,
+			pitch: 45,
+			bearing: -17.6,
+			hash: true,
 		});
 
 		console.log(storage.geojson);
 
-
-		// storage.geojson.features.forEach(function(item) {
-
-		// 	// create a HTML element for each feature
-		// 	var el = document.createElement('div');
-		// 	el.className = 'marker';
-		// 	// el.addEventListener('click', )
-		 
-		// 	// make a marker for each feature and add to the map
-
-		// 	const marker = new mapboxgl.Marker(el)
-		// 		.setLngLat(item.geometry.coordinates)
-		// 		.addTo(myMap);
-
-		// 	map.mapMarkers.push(marker); // 
-		// 	console.log(map.mapMarkers);
-		//  });
-		
 
 		// Map the locations on the map
 		data.results.bindings.forEach(item => {
@@ -73,7 +58,7 @@ const map = {
 			})
 
 			// console.log(item);
-			
+
 
 
 
@@ -82,7 +67,7 @@ const map = {
 			el.classList.add('marker', `marker-${foundKey}`);
 			// el.className = `marker-${foundKey}`;
 			// el.addEventListener('click', )
-		 
+
 			// make a marker for each feature and add to the map
 
 			const marker = new mapboxgl.Marker(el)
@@ -92,21 +77,62 @@ const map = {
 			marker.options = item;
 
 			// console.log(marker);
-				
+
 
 			map.mapMarkers.push(marker); // 
 
 		});
 
 		console.log(this.mapMarkers);
-		
 
+
+
+		// The 'building' layer in the mapbox-streets vector source contains building-height
+		// data from OpenStreetMap.
+		myMap.on('load', function () {
+			// Insert the layer beneath any symbol layer.
+			var layers = myMap.getStyle().layers;
+
+			var labelLayerId;
+			for (var i = 0; i < layers.length; i++) {
+				if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+					labelLayerId = layers[i].id;
+					break;
+				}
+			}
+
+			myMap.addLayer({
+				'id': '3d-buildings',
+				'source': 'composite',
+				'source-layer': 'building',
+				'filter': ['==', 'extrude', 'true'],
+				'type': 'fill-extrusion',
+				'minzoom': 15,
+				'paint': {
+					'fill-extrusion-color': '#aaa',
+
+					// use an 'interpolate' expression to add a smooth transition effect to the
+					// buildings as the user zooms in
+					'fill-extrusion-height': [
+						"interpolate", ["linear"], ["zoom"],
+						15, 0,
+						15.2, ["get", "height"]
+					],
+					'fill-extrusion-base': [
+						"interpolate", ["linear"], ["zoom"],
+						15, 0,
+						15.2, ["get", "min_height"]
+					],
+					'fill-extrusion-opacity': .6
+				}
+			}, labelLayerId);
+		});
 
 	},
 
 	refreshMap() {
 		console.log('Refresh map');
-		
+
 		let activeFilters = [];
 
 		// Gettin the active filters

@@ -35,6 +35,7 @@ header {
 === Map styling
 ===========================*/
 #map {
+  position: relative;
   height: 85%; }
 
 #image-con {
@@ -49,6 +50,18 @@ header {
   z-index: 1000; }
   #image-con.show {
     transform: translateY(0); }
+
+aside {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 5rem;
+  z-index: 100;
+  background: #fff;
+  transition: .3s all;
+  transform: translateX(100%); }
+  aside.show {
+    transform: translateX(0); }
 
 /*==========================
 === Filter styles
