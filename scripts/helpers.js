@@ -4,22 +4,29 @@ const helpers = {
 	getElement(element) { return document.querySelector(element) },
 	getElements(element) { return document.querySelectorAll(element) },
 	createElement(element) { return document.createElement(element) },
-	groupItems(dataArray, f) {
-		var groups = {};
-		
-		dataArray.forEach(function (o) {
-			console.log(o);
-			
-			var group = JSON.stringify(f(o));
-			groups[group] = groups[group] || [];
-			groups[group].push(o);
-		});
-		console.log(groups);
-		return Object.values(groups).map(function (group) {
-			console.log(11, group);
-			
-			return groups[group];
-		})
+	groupItems(dataArray) {
+
+		var output = [];
+
+		dataArray.forEach(function(value) {
+			var existing = output.filter(function(v, i) {
+			  return v.name == value.name;
+			});
+
+			if (existing.length) {
+			  var existingIndex = output.indexOf(existing[0]);
+			  console.log(output);
+			  
+			  output[existingIndex].value = output[existingIndex].value.concat(value.value);
+			} else {
+			  if (typeof value.value == 'string')
+				 value.value = [value.value];
+			  output.push(value);
+			}
+		 });
+
+		 console.log(output);
+		 
 	},
 	randomYear(startYear = null) {
 		const chance = Math.random();

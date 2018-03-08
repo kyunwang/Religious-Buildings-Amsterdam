@@ -19,7 +19,7 @@ import helpers from './helpers.js';
 				}).then(() => {
 					// console.log(1,storage.buildingData.results.bindings.length);
 					
-					// const test = helpers.groupItems(storage.buildingData.results.bindings, function(item) {
+					// const test = helpers.groupItems(storage.buildingData.results.bindings);
 					// 	// console.log(...item);
 					// 	// return []
 					// })
@@ -27,6 +27,10 @@ import helpers from './helpers.js';
 					// console.log(test);
 					
 					// map.initMapLeaflet(res);
+
+					// helpers.groupItems
+
+
 					map.initMap(storage.buildingData);
 				})
 		},
