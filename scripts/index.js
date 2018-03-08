@@ -50,19 +50,20 @@ import helpers from './helpers.js';
 				filterBtn.textContent = item;
 				
 				// Not needed to do refreshing like this anymore
-				filterBtn.addEventListener('change', this.refreshMap(item))
+				filterBtn.addEventListener('change', map.refreshFilterMap);
 
 				// Appending the checkboxes
 				app.header.appendChild(filterBtn);
 				app.header.appendChild(filterBtnLabel);
 			})
 		},
+
 		// Not needed to do refreshing like this anymore
 		refreshMap() {
 			// A Closure making use of Currying ^^
 			return function() {
 				// console.log('refreshMap', data, storage.buildingData);
-				map.refreshMap();
+				map.refreshFilterMap();
 			}
 		}
 	}

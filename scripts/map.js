@@ -6,7 +6,8 @@ import { MAPBOX_GL_TOKEN } from './secret.js';
 
 const map = {
 	// imageCon: helpers.getElement('#image-con'),
-	imageCon: helpers.getElement('aside'),
+	// imageCon: helpers.getElement('aside'),
+	imageCon: helpers.getElement('#map'),
 	imageConDiv: helpers.getElement('aside > div'),
 	imageConClose: helpers.getElement('aside > button'),
 	filterItems: [],
@@ -106,34 +107,34 @@ const map = {
 
 	},
 
-	refreshMap() {
-		console.log('Refresh map');
+	refreshFilterMap() {
+		console.log('Refresh filter map');
 
 		let activeFilters = [];
 
 		// Gettin the active filters
-		this.filterBtns.forEach(filterNode => {
+		map.filterBtns.forEach(filterNode => {
 			if (filterNode.checked) {
 				activeFilters.push(filterNode.name);
 			}
 		});
 
-		console.log(123,activeFilters);
-		
-		
-
 		// Display * Hide marker logic
-		this.mapMarkers.forEach(item => {
+		map.mapMarkers.forEach(item => {
 			// Thanks to this mate: https://stackoverflow.com/a/39893636/8525996
 			// Checks whether a array contains a same array item from another array
 			const foundKeys = activeFilters.includes(item.options.type.value)
 
 			if (foundKeys) {
-				item._element.classList.remove('hide');
+				item._element.classList.remove('hide-filter');
 			} else {
-				item._element.classList.add('hide');
+				item._element.classList.add('hide-filter');
 			}
 		})
+	},
+	refreshYearMap() {
+		console.log('Refresh year map');
+		
 	},
 	toggleDetail(marker) {
 		const data = marker.options;

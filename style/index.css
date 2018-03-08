@@ -5,7 +5,8 @@
   --temple-color: yellow;
   --mosque-color: lightblue;
   --shrine-color: salmon;
-  --def-transition: all .1s ease-in; }
+  --def-transition: all .3s ease-in;
+  --def-transition-fast: all .1s ease-in; }
 
 *,
 *:before,
@@ -37,6 +38,19 @@ header {
 #map {
   position: relative;
   height: 85%; }
+  #map::after {
+    content: "";
+    transition: var(--def-transition); }
+  #map.show::after {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.3); }
+  #map.show aside {
+    transform: translateX(0); }
 
 #image-con {
   position: absolute;
@@ -46,7 +60,7 @@ header {
   background-color: transparent;
   background-color: red;
   transform: translateY(100%);
-  transition: .3s all;
+  transition: var(--def-transition);
   z-index: 1000; }
   #image-con.show {
     transform: translateY(0); }
@@ -55,13 +69,11 @@ aside {
   position: absolute;
   right: 0;
   height: 100%;
-  width: 25rem;
+  width: 20rem;
   z-index: 100;
   background: #fff;
   transition: .3s all;
   transform: translateX(100%); }
-  aside.show {
-    transform: translateX(0); }
 
 /*==========================
 === Filter styles
@@ -83,7 +95,8 @@ aside {
     border-bottom: 3px solid var(--shrine-color); }
 
 label {
-  transition: var(--def-transition); }
+  border-bottom-width: 0px;
+  transition: var(--def-transition-fast); }
 
 /*==========================
 === Marker styles
@@ -123,5 +136,7 @@ label {
 .marker-shrine {
   background-color: var(--shrine-color); }
 
-.hide {
+.hide,
+.hide-filter,
+.hide-year {
   display: none; }
