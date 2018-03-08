@@ -14,16 +14,9 @@ const storage = {
 			// console.log(item);
 			if (!item.coordinate_location) return item;
 
-			// console.log(item);
-
 
 			item.buildYear = helpers.randomYear();
 			item.demolishYear = helpers.randomYear(item.buildYear);
-
-			console.log('BuildYear' ,item.buildYear);
-			console.log('Demolish' ,item.demolishYear);
-			
-
 
 			// Clean and create usable coordinates
 			let coords = item.coordinate_location.value
@@ -33,7 +26,7 @@ const storage = {
 				return Number(item.replace(/[^0-9\.]+/g, ""));
 			})
 
-			item.coordinate_location.value = {
+			const geo_Template = {
 				type: 'Feature',
 				geometry: {
 					type: 'Point',
@@ -45,43 +38,18 @@ const storage = {
 				}
 			};
 
-			this.geojson.features.push({
-				type: 'Feature',
-				geometry: {
-					type: 'Point',
-					coordinates: coords
-				},
-				properties: {
-					title: 'Mapbox',
-					description: 'Washington, D.C.',
-				}
-			});
+			item.coordinate_location.value = geo_Template;
+
+
+			this.geojson.features.push(geo_Template);
 
 			return item;
 		});
 		return data;
+	},
+	allYears(data) {
+
 	}
-	// cleanData(data) {
-	// 	data.results.bindings = data.results.bindings.map(item => {
-	// 		// console.log(item);
-	// 		if (!item.coordinate_location) return item;
-
-	// 		// console.log(item);
-
-	// 		// Clean and create usable coordinates
-	// 		let coords = item.coordinate_location.value
-	// 			.split(' ')
-
-	// 			coords = coords.map((item, i) => {
-	// 				return Number(item.replace(/[^0-9\.]+/g, ""));
-	// 			})
-
-	// 			item.coordinate_location.value = coords;
-
-	// 			return item;
-	// 	});
-	// 	return data;
-	// }
 }
 
 export default storage;

@@ -6,28 +6,9 @@ import { MAPBOX_GL_TOKEN } from './secret.js';
 
 const map = {
 	imageCon: helpers.getElement('#image-con'),
-	filterItems: ['synagogue', 'monastery', 'temple', 'church', 'mosque', 'shrine'],
+	filterItems: [],
 	filterBtns: [],
 	mapMarkers: [],
-
-	initMapGoogle(data) {
-		console.log('Google map init');
-
-		const map = new google.maps.Map(helpers.getElement('#map'), {
-			center: { lat: 52.3675, lng: 4.905278 },
-			zoom: 8
-		});
-
-		data.results.bindings.forEach(item => {
-			if (!item.coordinate_location) return;
-			const lat = item.coordinate_location.value[1];
-			const lng = item.coordinate_location.value[0];
-			new google.maps.Marker({
-				position: { lat, lng },
-				map: map
-			});
-		})
-	},
 	initMap(data) {
 		mapboxgl.accessToken = MAPBOX_GL_TOKEN;
 
@@ -41,9 +22,6 @@ const map = {
 			bearing: -17.6,
 			hash: true,
 		});
-
-		console.log(storage.geojson);
-
 
 		// Map the locations on the map
 		data.results.bindings.forEach(item => {
@@ -82,9 +60,6 @@ const map = {
 			map.mapMarkers.push(marker); // 
 
 		});
-
-		console.log(this.mapMarkers);
-
 
 
 		// The 'building' layer in the mapbox-streets vector source contains building-height

@@ -32,6 +32,12 @@ import helpers from './helpers.js';
 		},
 
 		assignFilterBtns(data) {
+			const keys = storage.buildingData.results.bindings.map(item => item.type.value);
+			
+			// Get the available keys only & remove duplicates
+			map.filterItems = keys.filter((d, i, self) => i === self.indexOf(d));
+
+
 			map.filterItems.forEach(item => {
 				// They are checkboxes thou
 				let filterBtn = helpers.createElement('input');

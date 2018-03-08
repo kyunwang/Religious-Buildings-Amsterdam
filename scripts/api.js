@@ -5,12 +5,13 @@ import storage from './storage.js';
 const api = {
 	endpointUrl: 'https://query.wikidata.org/sparql',
 	query: `
-	SELECT ?monastery ?monasteryLabel ?temple ?templeLabel ?church ?churchLabel ?shrine ?shrineLabel ?mosque ?mosqueLabel ?image ?coordinate_location WHERE {
+	SELECT ?synagogue ?synagogueLabel ?monastery ?monasteryLabel ?temple ?templeLabel ?church ?churchLabel ?shrine ?shrineLabel ?mosque ?mosqueLabel ?image ?coordinate_location ?type WHERE {
 		SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
 		
 		{  
 		  ?mosque wdt:P31 wd:Q32815 .
 		  ?mosque wdt:P131 wd:Q9899 .
+		  BIND('mosque' AS ?type) .
 		  OPTIONAL {
 			 ?mosque wdt:P18 ?image .
 			 ?mosque wdt:P625 ?coordinate_location .
@@ -18,6 +19,7 @@ const api = {
 		} UNION {
 		  ?church wdt:P31 wd:Q16970 .
 		  ?church wdt:P131 wd:Q9899 .
+		  BIND('church' AS ?type) .
 		  OPTIONAL {
 			 ?church wdt:P18 ?image .
 			 ?church wdt:P625 ?coordinate_location .
@@ -25,6 +27,7 @@ const api = {
 		} UNION {
 		  ?shrine wdt:P31 wd:Q697295 .
 		  ?shrine wdt:P131 wd:Q9899 .
+		  BIND('shrine' AS ?type) .
 		  OPTIONAL {
 			 ?shrine wdt:P18 ?image .
 			 ?shrine wdt:P625 ?coordinate_location .
@@ -32,6 +35,7 @@ const api = {
 		} UNION {
 		  ?temple wdt:P31 wd:Q44539 .
 		  ?temple wdt:P131 wd:Q9899 .
+		  BIND('temple' AS ?type) .
 		  OPTIONAL {
 			 ?temple wdt:P18 ?image .
 			 ?temple wdt:P625 ?coordinate_location .
@@ -39,14 +43,21 @@ const api = {
 		} UNION {
 		  ?monastery wdt:P31 wd:Q44613 .
 		  ?monastery wdt:P131 wd:Q9899 .
+		  BIND('monastery' AS ?type) .
 		  OPTIONAL {
 			 ?monastery wdt:P18 ?image .
 			 ?monastery wdt:P625 ?coordinate_location .
 		  }
+		} UNION {
+		  ?synagogue wdt:P31 wd:Q34627 .
+		  ?synagogue wdt:P131 wd:Q9899 .
+		  BIND('synagogue' AS ?type) .
+		  OPTIONAL {
+			 ?synagogue wdt:P18 ?image .
+			 ?synagogue wdt:P625 ?coordinate_location .
+		  }
 		}
 	 }
-	 
-	 LIMIT 200
 	 `,
 	init: async function () {
 		const fullUrl = this.endpointUrl + '?query=' + encodeURIComponent( this.query )
