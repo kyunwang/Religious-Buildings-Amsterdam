@@ -26,5 +26,6 @@
 	"devDependencies": {
 		"concurrently": "^3.5.1",
 		"node-sass": "^4.7.2"
-	}
+	},
+	"dependencies": {}
 }

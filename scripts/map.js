@@ -3,6 +3,8 @@
 import storage from './storage.js';
 import helpers from './helpers.js';
 
+import { WRLD_API_KEY } from './secret.js';
+
 const map = {
 	imageCon: helpers.getElement('#image-con'),
 	filterItems: ['synagogue', 'monastery', 'temple', 'church', 'mosque', 'shrine'],
@@ -31,6 +33,17 @@ const map = {
 		var mymap = L.map('map')
 			.setView([52.3675, 4.905278], 13);
 
+		// const mymap = L.Wrld.map('map', WRLD_API_KEY, {
+		// 	center: [52.3675, 4.905278],
+		// 	zoom: 15
+		// });
+
+		// var mymap = L.Wrld.map("map", WRLD_API_KEY, {
+		// 	// center: [51.514613, -0.081019], // London
+		// 	center: [52.3675, 4.905278], // Amsterdam
+		// 	zoom: 16
+		//  });
+
 		// L.tileLayer('https://{s}.tile.thunderforest.com/pioneer/{z}/{x}/{y}.png', {
 		L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
 			// L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
@@ -44,8 +57,6 @@ const map = {
 
 		// Map the locations on the map
 		data.results.bindings.forEach(item => {
-			// console.log(item);
-
 			if (!item.coordinate_location) return;
 			const lat = item.coordinate_location.value[1];
 			const lng = item.coordinate_location.value[0];
