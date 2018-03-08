@@ -142,13 +142,13 @@ const map = {
 			map.imageConDiv.innerHTML = ''; // Quick hacky way to clear the children ( time mann 😢)
 			map.imageCon.classList.toggle('show');
 
-			// console.log(data);
-			let img = helpers.createElement('img');
-			img.src = data.image.value;
-			img.title = data.image.value;
-			// console.log(img);
-
-			map.imageConDiv.appendChild(img);
+			data.image.value.forEach(image => {
+				let img = helpers.createElement('img');
+				img.src = image;
+				img.title = image;
+				
+				map.imageConDiv.appendChild(img);
+			})
 		}
 	},
 	closeDetail() {
