@@ -41,7 +41,6 @@ const map = {
 			})
 
 
-
 			// create a HTML element for each feature
 			const markerCon = document.createElement('div');
 			markerCon.classList.add('marker', `marker-${item.type.value}`);

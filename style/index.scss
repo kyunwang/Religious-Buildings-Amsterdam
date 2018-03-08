@@ -22,9 +22,14 @@ body {
     position: relative;
     height: 100%;
     margin: 0;
-    padding: 0;
-    overflow: hidden;
+    padding: 0; //  overflow: hidden;
     font-family: 'open sans', sans-serif;
+}
+
+body {
+    display: grid; //  grid-template-areas: "filter" "map" "map";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
 }
 
 
@@ -33,13 +38,10 @@ body {
 ===========================*/
 
 img {
-    // width: 10rem;
     max-height: 20rem;
 }
 
-header {
-    //  height: 15%;
-}
+header {}
 
 
 /*==========================
@@ -48,7 +50,7 @@ header {
 
 #map {
     position: relative;
-    height: 85%;
+    grid-row: 2 / span 2;
     &::after {
         content: "";
         transition: var(--def-transition);
@@ -87,16 +89,20 @@ aside {
 ===========================*/
 
 #filter-container {
+    grid-row: 1/1;
+    height: min-content;
     display: flex;
-    align-items: center; //  justify-content: center;
-    height: 3rem;
+    align-items: center;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    overflow-y: visible;
+    z-index: 100;
 }
 
 label {
-    //  height: 3rem;
     border-bottom-width: 0px;
     transition: var(--def-transition-fast);
-    padding: .5rem 1rem;
+    padding: .5rem 1.5rem;
+    font-size: .9em;
 }
 
 .filter-checkbox {
