@@ -88,8 +88,11 @@ import helpers from './helpers.js';
 			filterSlider.min = min;
 			filterSlider.max = max;
 
-			filterSlider.addEventListener('change', map.refreshYearMap(filterSliderLabel));
+			// Fires when mouseup
+			// filterSlider.addEventListener('change', map.refreshYearMap(filterSliderLabel));
 
+			// Fires on move/adjust slider
+			filterSlider.addEventListener('input', map.refreshYearMap(filterSliderLabel));
 
 
 			app.filterContainer.appendChild(filterSlider);
