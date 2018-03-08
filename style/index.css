@@ -21,16 +21,14 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; }
+  overflow: hidden;
+  font-family: 'open sans', sans-serif; }
 
 /*==========================
 === General styling
 ===========================*/
 img {
   max-height: 20rem; }
-
-header {
-  height: 15%; }
 
 /*==========================
 === Map styling
@@ -52,19 +50,6 @@ header {
   #map.show aside {
     transform: translateX(0); }
 
-#image-con {
-  position: absolute;
-  bottom: 0;
-  height: 15rem;
-  width: 100%;
-  background-color: transparent;
-  background-color: red;
-  transform: translateY(100%);
-  transition: var(--def-transition);
-  z-index: 1000; }
-  #image-con.show {
-    transform: translateY(0); }
-
 aside {
   position: absolute;
   right: 0;
@@ -78,25 +63,31 @@ aside {
 /*==========================
 === Filter styles
 ===========================*/
-.filter-btn {
-  position: absolute;
-  left: -9999999px; }
-  .filter-btn:hover + .label-church, .filter-btn:checked + .label-church {
-    border-bottom: 3px solid var(--church-color); }
-  .filter-btn:hover + .label-synagogue, .filter-btn:checked + .label-synagogue {
-    border-bottom: 3px solid var(--synagogue-color); }
-  .filter-btn:hover + .label-monastery, .filter-btn:checked + .label-monastery {
-    border-bottom: 3px solid var(--monastery-color); }
-  .filter-btn:hover + .label-temple, .filter-btn:checked + .label-temple {
-    border-bottom: 3px solid var(--temple-color); }
-  .filter-btn:hover + .label-mosque, .filter-btn:checked + .label-mosque {
-    border-bottom: 3px solid var(--mosque-color); }
-  .filter-btn:hover + .label-shrine, .filter-btn:checked + .label-shrine {
-    border-bottom: 3px solid var(--shrine-color); }
+#filter-container {
+  display: flex;
+  align-items: center;
+  height: 3rem; }
 
 label {
   border-bottom-width: 0px;
-  transition: var(--def-transition-fast); }
+  transition: var(--def-transition-fast);
+  padding: .5rem 1rem; }
+
+.filter-checkbox {
+  position: absolute;
+  left: -9999999px; }
+  .filter-checkbox:hover + .label-church, .filter-checkbox:checked + .label-church {
+    border-bottom: 3px solid var(--church-color); }
+  .filter-checkbox:hover + .label-synagogue, .filter-checkbox:checked + .label-synagogue {
+    border-bottom: 3px solid var(--synagogue-color); }
+  .filter-checkbox:hover + .label-monastery, .filter-checkbox:checked + .label-monastery {
+    border-bottom: 3px solid var(--monastery-color); }
+  .filter-checkbox:hover + .label-temple, .filter-checkbox:checked + .label-temple {
+    border-bottom: 3px solid var(--temple-color); }
+  .filter-checkbox:hover + .label-mosque, .filter-checkbox:checked + .label-mosque {
+    border-bottom: 3px solid var(--mosque-color); }
+  .filter-checkbox:hover + .label-shrine, .filter-checkbox:checked + .label-shrine {
+    border-bottom: 3px solid var(--shrine-color); }
 
 /*==========================
 === Marker styles

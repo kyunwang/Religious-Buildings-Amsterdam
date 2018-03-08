@@ -7,13 +7,14 @@ import helpers from './helpers.js';
 
 (function () {
 	const app = {
-		header: helpers.getElement('#header'),
+		header: helpers.getElement('header'),
+		filterContainer: helpers.getElement('#filter-container'),
 		init() {
 			api.init()
 				.then( async res => {
 					storage.buildingData = res;
-					await this.assignFilterBtns(); // Assing and create the buttons first
-					map.filterBtns = helpers.getElements('.filter-btn'); // Then get them for later use
+					await this.assignFilterCheckboxes(); // Assing and create the buttons first
+					map.filterCheckboxes = helpers.getElements('.filter-checkbox'); // Then get them for later use
 					// return res;
 				}).then(() => {
 					storage.groupItems(storage.buildingData.results.bindings);
@@ -22,7 +23,7 @@ import helpers from './helpers.js';
 				})
 		},
 
-		assignFilterBtns(data) {
+		assignFilterCheckboxes(data) {
 			const keys = storage.buildingData.results.bindings.map(item => item.type.value);
 			
 			// Get the available keys only & remove duplicates
@@ -30,31 +31,31 @@ import helpers from './helpers.js';
 
 			map.filterItems.forEach(item => {
 				// They are checkboxes thou
-				let filterBtn = helpers.createElement('input');
-				let filterBtnLabel = helpers.createElement('label');
+				let filterCheckbox = helpers.createElement('input');
+				let filterCheckboxLabel = helpers.createElement('label');
 
 				// Adding attributes to the checkbox's label
-				filterBtnLabel.htmlFor = `button-${item}`;
-				filterBtnLabel.textContent = `${item.charAt(0).toUpperCase()}${item.slice(1)}`;
-				// filterBtnLabel.textContent = `button-${item}`;
-				filterBtnLabel.className = `label-${item}`;
+				filterCheckboxLabel.htmlFor = `button-${item}`;
+				filterCheckboxLabel.textContent = `${item.charAt(0).toUpperCase()}${item.slice(1)}`;
+				// filterCheckboxLabel.textContent = `button-${item}`;
+				filterCheckboxLabel.className = `label-${item}`;
 
 				// Adding attributes to the checkbox
-				filterBtn.type = 'checkbox';
-				filterBtn.id = `button-${item}`;
-				filterBtn.className = 'filter-btn';
-				filterBtn.value = item;
-				filterBtn.name = item;
-				// filterBtn.dataset.color = `var(--${item}-color)`; // Does not work 😞
-				filterBtn.checked = true;
-				filterBtn.textContent = item;
+				filterCheckbox.type = 'checkbox';
+				filterCheckbox.id = `button-${item}`;
+				filterCheckbox.className = 'filter-checkbox';
+				filterCheckbox.value = item;
+				filterCheckbox.name = item;
+				// filterCheckbox.dataset.color = `var(--${item}-color)`; // Does not work 😞
+				filterCheckbox.checked = true;
+				filterCheckbox.textContent = item;
 				
 				// Not needed to do refreshing like this anymore
-				filterBtn.addEventListener('change', map.refreshFilterMap);
+				filterCheckbox.addEventListener('change', map.refreshFilterMap);
 
 				// Appending the checkboxes
-				app.header.appendChild(filterBtn);
-				app.header.appendChild(filterBtnLabel);
+				app.filterContainer.appendChild(filterCheckbox);
+				app.filterContainer.appendChild(filterCheckboxLabel);
 			})
 		},
 

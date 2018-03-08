@@ -11,7 +11,7 @@ const map = {
 	imageConDiv: helpers.getElement('aside > div'),
 	imageConClose: helpers.getElement('aside > button'),
 	filterItems: [],
-	filterBtns: [],
+	filterCheckboxes: [],
 	mapMarkers: [],
 	initMap(data) {
 		mapboxgl.accessToken = MAPBOX_GL_TOKEN;
@@ -113,7 +113,7 @@ const map = {
 		let activeFilters = [];
 
 		// Gettin the active filters
-		map.filterBtns.forEach(filterNode => {
+		map.filterCheckboxes.forEach(filterNode => {
 			if (filterNode.checked) {
 				activeFilters.push(filterNode.name);
 			}

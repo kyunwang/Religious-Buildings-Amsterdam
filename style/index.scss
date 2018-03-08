@@ -24,6 +24,7 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    font-family: 'open sans', sans-serif;
 }
 
 
@@ -37,7 +38,7 @@ img {
 }
 
 header {
-    height: 15%;
+    //  height: 15%;
 }
 
 
@@ -68,21 +69,6 @@ header {
     }
 }
 
-#image-con {
-    position: absolute;
-    bottom: 0;
-    height: 15rem;
-    width: 100%;
-    background-color: transparent;
-    background-color: red;
-    transform: translateY(100%);
-    transition: var(--def-transition);
-    z-index: 1000;
-    &.show {
-        transform: translateY(0);
-    }
-}
-
 aside {
     position: absolute;
     right: 0;
@@ -100,7 +86,20 @@ aside {
 === Filter styles
 ===========================*/
 
-.filter-btn {
+#filter-container {
+    display: flex;
+    align-items: center; //  justify-content: center;
+    height: 3rem;
+}
+
+label {
+    //  height: 3rem;
+    border-bottom-width: 0px;
+    transition: var(--def-transition-fast);
+    padding: .5rem 1rem;
+}
+
+.filter-checkbox {
     position: absolute;
     left: -9999999px;
     &:hover,
@@ -130,11 +129,6 @@ aside {
     }
     &:hover,
     &:focus {}
-}
-
-label {
-    border-bottom-width: 0px;
-    transition: var(--def-transition-fast);
 }
 
 
