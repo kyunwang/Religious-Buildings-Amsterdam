@@ -31,7 +31,7 @@ const map = {
 	initMap(data) {
 		mapboxgl.accessToken = MAPBOX_GL_TOKEN;
 
-		var map = new mapboxgl.Map({
+		var myMap = new mapboxgl.Map({
 			container: 'map',
 			style: 'mapbox://styles/mapbox/light-v9',
 			// center: [52.3675, 4.905278],
@@ -39,37 +39,74 @@ const map = {
 			zoom: 14
 		});
 
-		console.log(storage.geo);
+		console.log(storage.geojson);
 
 
-		storage.geo.features.forEach(function(marker) {
+		// storage.geojson.features.forEach(function(item) {
 
-			// create a HTML element for each feature
-			var el = document.createElement('div');
-			el.className = 'marker';
+		// 	// create a HTML element for each feature
+		// 	var el = document.createElement('div');
+		// 	el.className = 'marker';
+		// 	// el.addEventListener('click', )
 		 
-			// make a marker for each feature and add to the map
-			new mapboxgl.Marker(el)
-				.setLngLat(marker.geometry.coordinates)
-				.addTo(map);
-		 });
+		// 	// make a marker for each feature and add to the map
+
+		// 	const marker = new mapboxgl.Marker(el)
+		// 		.setLngLat(item.geometry.coordinates)
+		// 		.addTo(myMap);
+
+		// 	map.mapMarkers.push(marker); // 
+		// 	console.log(map.mapMarkers);
+		//  });
 		
 
 		// Map the locations on the map
 		data.results.bindings.forEach(item => {
 			if (!item.coordinate_location) return;
-			const lat = item.coordinate_location.value[1];
-			const lng = item.coordinate_location.value[0];
+			// const lat = item.coordinate_location.value[1];
+			// const lng = item.coordinate_location.value[0];
 
 			const buildingKeys = Object.keys(item);
 			const foundKey = buildingKeys.filter(key => {
 				if (this.filterItems.includes(key)) return true;
 				return false;
 			})
+
+			// console.log(item);
+			
+
+
+
+			// create a HTML element for each feature
+			var el = document.createElement('div');
+			el.classList.add('marker', `marker-${foundKey}`);
+			// el.className = `marker-${foundKey}`;
+			// el.addEventListener('click', )
+		 
+			// make a marker for each feature and add to the map
+
+			const marker = new mapboxgl.Marker(el)
+				.setLngLat(item.coordinate_location.value.geometry.coordinates)
+				.addTo(myMap);
+
+			marker.options = item;
+
+			// console.log(marker);
+				
+
+			map.mapMarkers.push(marker); // 
+
 		});
+
+		console.log(this.mapMarkers);
+		
+
+
 	},
 
 	refreshMap() {
+		console.log('Refresh map');
+		
 		let activeFilters = [];
 
 		// Gettin the active filters
@@ -88,12 +125,10 @@ const map = {
 			// Checks whether a array contains a same array item from another array
 			const foundKeys = buildingKeys.some(key => activeFilters.includes(key))
 
-
 			if (foundKeys) {
-				// Leaflet method
-				L.DomUtil.removeClass(item._icon, 'hide')
+				item._element.classList.remove('hide');
 			} else {
-				L.DomUtil.addClass(item._icon, 'hide')
+				item._element.classList.add('hide');
 			}
 		})
 	}
