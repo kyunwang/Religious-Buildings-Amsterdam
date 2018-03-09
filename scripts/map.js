@@ -39,8 +39,16 @@ const map = {
 
 
 			// create a HTML element for each feature
+			// const markerCon = document.createElement('object');
+			// markerCon.data = storage.images[`${item.type.value}`]
+			// markerCon.type = 'image/svg+xml';
+			// markerCon.classList.add('marker', `marker-${item.type.value}`);
+
+			
 			const markerCon = document.createElement('div');
 			markerCon.classList.add('marker', `marker-${item.type.value}`);
+
+
 			// el.className = `marker-${foundKey}`;
 
 			// make a marker for each feature and add to the map

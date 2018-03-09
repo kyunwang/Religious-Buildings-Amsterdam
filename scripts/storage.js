@@ -3,6 +3,14 @@
 import helpers from './helpers.js';
 
 const storage = {
+	images: {
+		synagogue: '../static/images/svg/001-synagogue.svg',
+		shrine: '../static/images/svg/002-shrine.svg',
+		mosque: '../static/images/svg/003-mosque.svg',
+		monastery: '../static/images/svg/004-monastery.svg',
+		church: '../static/images/svg/005-church.svg',
+		temple: '../static/images/svg/006-temple.svg',
+	},
 	buildingData: [],
 	geojson: { type: 'FeatureCollection', features: [] },
 	filterData(data) {
