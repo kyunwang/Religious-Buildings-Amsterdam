@@ -8,7 +8,8 @@
   --primary-color: #0091EA;
   --primary-border: 3px solid;
   --def-transition: all .3s ease-in;
-  --def-transition-fast: all .1s ease-in; }
+  --def-transition-fast: all .1s ease-in;
+  --def-transition-normal: all .5s ease-in; }
 
 *,
 *:before,
@@ -26,9 +27,7 @@ body {
   font-family: 'open sans', sans-serif; }
 
 body {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr; }
+  position: relative; }
 
 /*==========================
 === General styling
@@ -41,7 +40,8 @@ img {
 ===========================*/
 #map {
   position: relative;
-  grid-row: 2 / span 2; }
+  height: 100%;
+  width: 100%; }
   #map::after {
     content: "";
     transition: var(--def-transition); }
@@ -58,14 +58,17 @@ img {
 
 aside {
   position: absolute;
-  right: 0;
-  height: 100%;
+  top: 0;
+  bottom: 0;
+  right: 1rem;
+  height: 90%;
   width: 20rem;
   z-index: 100;
   background: #fff;
-  transition: .3s all;
-  transform: translateX(100%);
   padding: 1rem;
+  margin: auto 0;
+  transition: var(--def-transition);
+  transform: translateX(110%);
   overflow-y: scroll; }
   aside > button {
     display: block;
@@ -98,13 +101,26 @@ aside {
 /*==========================
 === Filter styles
 ===========================*/
+.show ~ #filter-container {
+  background: coral;
+  transform: translateY(-300%); }
+
 #filter-container {
-  grid-row: 1/1;
-  height: min-content;
   display: flex;
+  position: absolute;
+  flex-direction: column;
   align-items: center;
+  width: 90%;
+  height: min-content;
+  top: 2rem;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 0 auto;
+  padding-top: 1rem;
+  background: #fff;
+  transition: var(--def-transition-normal);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-  overflow-y: visible;
   z-index: 100; }
 
 label {
@@ -113,44 +129,66 @@ label {
   padding: .5rem 1.5rem;
   font-size: .9em; }
 
+#filter {
+  margin-bottom: .35rem;
+  padding-bottom: .35rem; }
+
+#slider {
+  margin: .5rem 0; }
+
 .filter-checkbox {
   position: absolute;
   left: -9999999px; }
-  .filter-checkbox:hover + .label-church, .filter-checkbox:checked + .label-church {
+  .filter-checkbox:checked + .label-church {
     border-bottom: 3px solid var(--church-color); }
-  .filter-checkbox:hover + .label-synagogue, .filter-checkbox:checked + .label-synagogue {
+  .filter-checkbox:checked + .label-synagogue {
     border-bottom: 3px solid var(--synagogue-color); }
-  .filter-checkbox:hover + .label-monastery, .filter-checkbox:checked + .label-monastery {
+  .filter-checkbox:checked + .label-monastery {
     border-bottom: 3px solid var(--monastery-color); }
-  .filter-checkbox:hover + .label-temple, .filter-checkbox:checked + .label-temple {
+  .filter-checkbox:checked + .label-temple {
     border-bottom: 3px solid var(--temple-color); }
-  .filter-checkbox:hover + .label-mosque, .filter-checkbox:checked + .label-mosque {
+  .filter-checkbox:checked + .label-mosque {
     border-bottom: 3px solid var(--mosque-color); }
-  .filter-checkbox:hover + .label-shrine, .filter-checkbox:checked + .label-shrine {
+  .filter-checkbox:checked + .label-shrine {
     border-bottom: 3px solid var(--shrine-color); }
+  .filter-checkbox:checked:hover + .label-church,
+  .filter-checkbox:checked:hover + .label-synagogue,
+  .filter-checkbox:checked:hover + .label-monastery,
+  .filter-checkbox:checked:hover + .label-temple,
+  .filter-checkbox:checked:hover + .label-mosque,
+  .filter-checkbox:checked:hover + .label-shrine {
+    border-bottom-width: 1rem; }
 
 /*==========================
 === Marker styles
 ===========================*/
 .marker {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 1.5rem;
-  width: 1.5rem;
-  border-radius: 1.5rem;
-  overflow: hidden; }
-  .marker::before {
-    content: "";
-    height: .9rem;
-    width: .9rem;
-    background-color: #fff;
-    border-radius: 2rem; }
-  .marker.on-enter {
-    z-index: 1000; }
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  margin: -20px 0 0 -20px; }
+  .marker:after {
+    content: '';
+    width: 14px;
+    height: 14px;
+    margin: 8px 0 0 8px;
+    background: #fff;
+    position: absolute;
+    border-radius: 50%; }
+
+@keyframes bounce {
+  0% {
+    opacity: 0; }
+  60% {
+    opacity: 1; }
+  80% { }
+  100% { } }
 
 .marker-church {
   background-color: var(--church-color); }
+  .marker-church svg {
+    stroke: red;
+    fill: red; }
 
 .marker-synagogue {
   background-color: var(--synagogue-color); }
