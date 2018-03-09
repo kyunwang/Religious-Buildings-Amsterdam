@@ -5,6 +5,8 @@
   --temple-color: yellow;
   --mosque-color: lightblue;
   --shrine-color: salmon;
+  --primary-color: #0091EA;
+  --primary-border: 3px solid;
   --def-transition: all .3s ease-in;
   --def-transition-fast: all .1s ease-in; }
 
@@ -63,15 +65,33 @@ aside {
   background: #fff;
   transition: .3s all;
   transform: translateX(100%);
+  padding: 1rem;
   overflow-y: scroll; }
+  aside > button {
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-bottom: .5rem;
+    border: none;
+    color: var(--primary-color);
+    text-transform: uppercase; }
+    aside > button::after {
+      content: "";
+      position: absolute;
+      transition: var(--def-transition-fast); }
+    aside > button:hover::after {
+      right: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 3px;
+      border-bottom: var(--primary-border) var(--primary-color); }
   aside > div {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 100%; }
+    justify-content: center; }
     aside > div img {
-      width: 90%; }
+      width: 100%; }
       aside > div img:not(:first-of-type) {
         margin-top: .3rem; }
 

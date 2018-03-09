@@ -10,7 +10,8 @@ import { MAPBOX_GL_TOKEN } from './secret.js';
 (function () {
 	const app = {
 		header: helpers.getElement('header'),
-		filterContainer: helpers.getElement('#filter-container'),
+		filterConSlider: helpers.getElement('#slider'),
+		filterConFilter: helpers.getElement('#filter'),
 		init() {
 			api.init()
 				.then(async res => {
@@ -68,8 +69,8 @@ import { MAPBOX_GL_TOKEN } from './secret.js';
 				filterCheckbox.addEventListener('change', map.refreshFilterMap);
 
 				// Appending the checkboxes
-				app.filterContainer.appendChild(filterCheckbox);
-				app.filterContainer.appendChild(filterCheckboxLabel);
+				app.filterConFilter.appendChild(filterCheckbox);
+				app.filterConFilter.appendChild(filterCheckboxLabel);
 			})
 		},
 		assignYearSlider() {
@@ -103,8 +104,8 @@ import { MAPBOX_GL_TOKEN } from './secret.js';
 			// Fires on move/adjust slider
 			filterSlider.addEventListener('input', map.refreshYearMap(filterSliderLabel));
 
-			app.filterContainer.appendChild(filterSlider);
-			app.filterContainer.appendChild(filterSliderLabel);
+			app.filterConSlider.appendChild(filterSlider);
+			app.filterConSlider.appendChild(filterSliderLabel);
 			
 		},
 		// Not needed to do refreshing like this anymore

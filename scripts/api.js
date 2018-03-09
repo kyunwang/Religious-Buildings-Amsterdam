@@ -61,7 +61,7 @@ const api = {
 	//  `,
 	query: `
 		SELECT ?item ?itemLabel ?image ?coordinate_location ?type WHERE {
-		SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+		SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],nl". }
 		{  
 			?item wdt:P31 wd:Q32815 .
 			?item wdt:P131 wd:Q9899 .
