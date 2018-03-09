@@ -133,7 +133,7 @@ const map = {
 			console.log('Refresh year map');
 			const selectedYear = e.target.value;
 
-			label.textContent = selectedYear;
+			label.textContent = `Building in year: ${selectedYear}`;
 
 			map.mapMarkers.forEach(item => {
 				if (item.options.buildYear <= selectedYear) {

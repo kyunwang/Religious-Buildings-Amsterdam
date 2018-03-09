@@ -79,7 +79,7 @@ import { MAPBOX_GL_TOKEN } from './secret.js';
 
 			// Adding attributes to the slider's label
 			filterSliderLabel.htmlFor = 'slider-year';
-			filterSliderLabel.textContent = 'test';
+			filterSliderLabel.textContent = 'All buildings';
 			filterSliderLabel.className = 'label-slider';
 
 			filterSlider.type = 'range';
@@ -102,7 +102,6 @@ import { MAPBOX_GL_TOKEN } from './secret.js';
 
 			// Fires on move/adjust slider
 			filterSlider.addEventListener('input', map.refreshYearMap(filterSliderLabel));
-
 
 			app.filterContainer.appendChild(filterSlider);
 			app.filterContainer.appendChild(filterSliderLabel);
