@@ -6,6 +6,7 @@ const map = {
 	// imageCon: helpers.getElement('#image-con'),
 	// imageCon: helpers.getElement('aside'),
 	imageCon: helpers.getElement('#map'),
+	imageConAside: helpers.getElement('aside > header'),
 	imageConDiv: helpers.getElement('aside > div'),
 	imageConClose: helpers.getElement('aside > button'),
 	filterItems: [],
@@ -53,7 +54,7 @@ const map = {
 
 			markerCon.addEventListener('click', function () {
 				map.toggleDetail(marker);
-			});			
+			});
 
 			map.mapMarkers.push(marker); // 
 		});
@@ -133,7 +134,7 @@ const map = {
 			const selectedYear = e.target.value;
 
 			label.textContent = selectedYear;
-			
+
 			map.mapMarkers.forEach(item => {
 				if (item.options.buildYear <= selectedYear) {
 					item._element.classList.remove('hide-year');
@@ -143,23 +144,48 @@ const map = {
 			})
 		}
 
-		
+
 	},
 	toggleDetail(marker) {
 		const data = marker.options;
 
-		if (data.image) {
-			map.imageConDiv.innerHTML = ''; // Quick hacky way to clear the children ( time mann 😢)
-			map.imageCon.classList.toggle('show');
+		console.log(data);
+		
+		map.addBuildingInfo(data);
 
-			data.image.value.forEach(image => {
-				let img = helpers.createElement('img');
-				img.src = image;
-				img.title = image;
-				
-				map.imageConDiv.appendChild(img);
-			})
+		if (data.image) {
+			map.addBuildingImage(data);
 		}
+	},
+	addBuildingInfo(data) {
+		map.imageConAside.innerHTML = '';
+		
+		let buildingInfoCon = helpers.createElement('div');
+		let buildingName = helpers.createElement('h2');
+		buildingName.textContent = data.itemLabel.value;
+
+		let buildingBuildYear = helpers.createElement('p'); buildingBuildYear.textContent = `Build year: ${data.buildYear}`;
+
+		let buildingBuildDemolish = helpers.createElement('p');
+		buildingBuildDemolish.textContent =`Demolish year: ${data.demolishYear || 'still standing'}`;
+
+		// From https://stackoverflow.com/a/36798273/8525996
+		buildingInfoCon.innerHTML += buildingName.outerHTML + buildingBuildYear.outerHTML + buildingBuildDemolish.outerHTML;
+
+		// Add the header with building info
+		map.imageConAside.insertAdjacentElement('afterbegin', buildingInfoCon);
+	},
+	addBuildingImage(data) {
+		map.imageConDiv.innerHTML = ''; // Quick hacky way to clear the children ( time mann 😢)
+		map.imageCon.classList.toggle('show');
+
+		data.image.value.forEach(image => {
+			let img = helpers.createElement('img');
+			img.src = image;
+			img.title = image;
+
+			map.imageConDiv.appendChild(img);
+		})
 	},
 	closeDetail() {
 		map.imageCon.classList.remove('show');

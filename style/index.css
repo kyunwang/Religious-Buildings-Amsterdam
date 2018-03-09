@@ -62,7 +62,18 @@ aside {
   z-index: 100;
   background: #fff;
   transition: .3s all;
-  transform: translateX(100%); }
+  transform: translateX(100%);
+  overflow-y: scroll; }
+  aside > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%; }
+    aside > div img {
+      width: 90%; }
+      aside > div img:not(:first-of-type) {
+        margin-top: .3rem; }
 
 /*==========================
 === Filter styles

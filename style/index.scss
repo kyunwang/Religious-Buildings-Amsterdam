@@ -78,7 +78,20 @@ aside {
     background: #fff;
     transition: .3s all;
     transform: translateX(100%);
-    &.show {}
+    overflow-y: scroll;
+    &>div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        img {
+            width: 90%;
+            &:not(:first-of-type) {
+                margin-top: .3rem;
+            }
+        }
+    }
 }
 
 
