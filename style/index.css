@@ -1,8 +1,8 @@
 :root {
   --church-color: lightseagreen;
   --synagogue-color: gray;
-  --monastery-color: violet;
-  --temple-color: yellow;
+  --monastery-color: plum;
+  --temple-color: khaki;
   --mosque-color: lightblue;
   --shrine-color: salmon;
   --primary-color: #0091EA;
@@ -102,7 +102,6 @@ aside {
 === Filter styles
 ===========================*/
 .show ~ #filter-container {
-  background: coral;
   transform: translateY(-300%); }
 
 #filter-container {
