@@ -62,7 +62,7 @@ aside {
   bottom: 0;
   right: 1rem;
   height: 90%;
-  width: 20rem;
+  width: 90%;
   z-index: 100;
   background: #fff;
   padding: 1rem;
@@ -97,6 +97,10 @@ aside {
       width: 100%; }
       aside > div img:not(:first-of-type) {
         margin-top: .3rem; }
+
+@media all and (min-width: 30rem) {
+  aside {
+    width: 20rem; } }
 
 /*==========================
 === Filter styles

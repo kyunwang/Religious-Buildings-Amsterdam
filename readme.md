@@ -46,6 +46,9 @@ Start Monday March 5th - End Friday March 9th
 - Basic detail info added for buildings
 - Freeze for presentations
 
+**Saturday**
+- Quick responsiveness fixes
+
 
 
 
