@@ -11,6 +11,8 @@ Prototyping and testing the new experimental API using RDF from OBA. As goal to 
 - RDF: Resource Description Framework
 - Bibliotheek: Library
 
+![preview image of the prototype](https://github.com/kyunwang/Religious-Buildings-Amsterdam/blob/master/readme-files/preview.png)
+
 ## Getting started
 How to get started working with this repo.
 
