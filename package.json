@@ -11,6 +11,8 @@
 		"browser-sync": "browser-sync start --server --files \"*.html, style/*.css, scripts/*.js\"",
 		"node-sass": "node-sass -w style/index.scss -o style/",
 		"push": "git push && git checkout master && git merge develop && git push && git checkout develop",
+		"bundleTest": "rollup scripts/index.js --output bundle.js --format iife",
+		"bundle": "rollup --config",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
@@ -25,8 +27,14 @@
 	},
 	"homepage": "https://github.com/kyunwang/oba-project#readme",
 	"devDependencies": {
+		"babel-core": "^6.26.0",
+		"babel-plugin-external-helpers": "^6.22.0",
+		"babel-preset-es2015-rollup": "^3.0.0",
 		"concurrently": "^3.5.1",
-		"node-sass": "^4.7.2"
+		"node-sass": "^4.7.2",
+		"rollup": "^0.56.5",
+		"rollup-plugin-babel": "^3.0.3",
+		"rollup-plugin-node-resolve": "^3.2.0"
 	},
 	"dependencies": {}
 }
