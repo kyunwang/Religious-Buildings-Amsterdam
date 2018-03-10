@@ -139,6 +139,7 @@ aside {
 
 #filter-container {
     display: flex;
+    flex-wrap: wrap;
     position: absolute; //  grid-row: 1/1; //  height: min-content;
     flex-direction: column;
     align-items: center;
@@ -155,6 +156,9 @@ aside {
     transition: var(--def-transition-normal);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); //  overflow-y: visible;
     z-index: 100;
+    header {
+        text-align: center;
+    }
 }
 
 label {
@@ -162,15 +166,21 @@ label {
     transition: var(--def-transition-fast);
     padding: .5rem 1.5rem;
     font-size: .9em;
+    flex: 1;
+    text-align: center;
 }
 
 #filter {
-    margin-bottom: .35rem;
-    padding-bottom: .35rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 #slider {
+    display: flex;
     margin: .5rem 0;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .filter-checkbox {
@@ -215,40 +225,22 @@ label {
     &:focus {}
 }
 
+@media all and (max-width: 30rem) {
+    #filter-container {
+        header {}
+    }
+}
+
 
 /*==========================
 === Marker styles
 ===========================*/
 
-// .marker {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     height: 1.5rem;
-//     width: 1.5rem;
-//     border-radius: 1.5rem;
-//     overflow: hidden;
-//     &::before {
-//         content: "";
-//         height: .9rem;
-//         width: .9rem;
-//         background-color: #fff;
-//         border-radius: 2rem;
-//     }
-//     &.on-enter {
-//         z-index: 1000;
-//     }
-//     &.on-leave {}
-// }
 .marker {
     width: 30px;
     height: 30px;
-    border-radius: 50% 50% 50% 0; //  position: absolute;
-    //  transform: rotate(-45deg); //  left: 50%;
-    //  top: 50%;
-    margin: -20px 0 0 -20px; //  animation-name: bounce;
-    //  animation-fill-mode: both;
-    //  animation-duration: 1s;
+    border-radius: 50% 50% 50% 0;
+    margin: -20px 0 0 -20px;
     &:after {
         content: '';
         width: 14px;
@@ -260,36 +252,11 @@ label {
     }
 }
 
-@keyframes bounce {
-    0% {
-        opacity: 0; //   transform: translateY(-2000px) rotate(-45deg)
-    }
-    ;
-    60% {
-        opacity: 1; //   transform: translateY(30px) rotate(-45deg);
-    }
-    80% {
-        //   transform: translateY(-10px) rotate(-45deg);
-    }
-    100% {
-        //   transform: rotate(-45deg);
-    }
-}
-
-// .marker {
-//     background-image: url('../static/images/mapbox-icon.png');
-//     background-size: cover;
-//     width: 50px;
-//     height: 50px;
-//     border-radius: 50%;
-//     cursor: pointer;
-// }
 .marker-church {
-    background-color: var(--church-color); //  background: url("../static/images/svg/005-church.svg");
-    svg {
-        stroke: red;
-        fill: red;
-    }
+    background-color: var(--church-color); //  svg {
+    //      stroke: red;
+    //      fill: red;
+    //  }
 }
 
 .marker-synagogue {

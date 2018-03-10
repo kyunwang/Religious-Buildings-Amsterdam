@@ -106,6 +106,7 @@ aside {
 
 #filter-container {
   display: flex;
+  flex-wrap: wrap;
   position: absolute;
   flex-direction: column;
   align-items: center;
@@ -121,19 +122,27 @@ aside {
   transition: var(--def-transition-normal);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   z-index: 100; }
+  #filter-container header {
+    text-align: center; }
 
 label {
   border-bottom-width: 0px;
   transition: var(--def-transition-fast);
   padding: .5rem 1.5rem;
-  font-size: .9em; }
+  font-size: .9em;
+  flex: 1;
+  text-align: center; }
 
 #filter {
-  margin-bottom: .35rem;
-  padding-bottom: .35rem; }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; }
 
 #slider {
-  margin: .5rem 0; }
+  display: flex;
+  margin: .5rem 0;
+  flex-wrap: wrap;
+  flex-direction: column; }
 
 .filter-checkbox {
   position: absolute;
@@ -175,19 +184,8 @@ label {
     position: absolute;
     border-radius: 50%; }
 
-@keyframes bounce {
-  0% {
-    opacity: 0; }
-  60% {
-    opacity: 1; }
-  80% { }
-  100% { } }
-
 .marker-church {
   background-color: var(--church-color); }
-  .marker-church svg {
-    stroke: red;
-    fill: red; }
 
 .marker-synagogue {
   background-color: var(--synagogue-color); }
