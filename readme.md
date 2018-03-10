@@ -11,7 +11,22 @@ Prototyping and testing the new experimental API using RDF from OBA. As goal to 
 - RDF: Resource Description Framework
 - Bibliotheek: Library
 
+## Getting started
+How to get started working with this repo.
 
+1. First clone the repo
+`https://github.com/kyunwang/Religious-Buildings-Amsterdam.git`
+
+2. Navigate to the cloned repo and app directory
+
+3. Run `npm i` to install the dependencies
+
+4. Well let's get started shall we?
+
+### Bundling
+If you want to bundle/transpile the Javascript run `npm run bundle` and a `bundle.js` file will appear in `scripts/bundle.js`
+
+## Schedule in short
 Start Monday March 5th - End Friday March 9th
 
 **Monday: Kick-off**
@@ -48,9 +63,4 @@ Start Monday March 5th - End Friday March 9th
 
 **Saturday**
 - Quick responsiveness fixes
-
-
-
-
-##
-Transpile the js
+- Bundle script made for transpiling the JS
