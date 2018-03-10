@@ -4,8 +4,7 @@ A one week project using `SparQL` for OBA(Openbare Bibliotheek Amsterdam)
 
 Prototyping and testing the new experimental API using RDF from OBA. As goal to show what is possible to do with their linked data.
 
-*Only working on the latest Chrome browser, because the JS needs to be transpiled first for it to work on other browsers.*
-
+*Developed using Chrome for ESNext features*
 
 - *SparQL*: Read *Sparkle*
 - RDF: Resource Description Framework
