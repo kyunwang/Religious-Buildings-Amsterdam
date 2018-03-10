@@ -1,4 +1,4 @@
-'user strict';
+'use strict';
 
 import helpers from './helpers.js';
 
